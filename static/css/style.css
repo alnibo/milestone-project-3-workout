@@ -1,0 +1,89 @@
+.nav-wrapper {
+    padding-left: 15px;
+    background-color: gray;
+}
+
+.brand-logo {
+    font-size: 15px !important;
+    margin-top: 3px;
+}
+
+.workout-logo {
+    margin-right: 5px;
+}
+
+h2 {
+    font-size: 20px !important;
+    text-align: center;
+}
+
+/* ************************************************** Footer */
+
+.page-footer {
+    background-color: gray;
+    padding: 15px 0;
+}
+
+/* ************************************************** Home page */
+
+.background-container {
+    background-image: url(/static/img/back_img.jpg);
+    background-position: left;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.home-box {
+    margin-top: 130px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.5)
+}
+
+.home-text {
+    padding: 10px 0;
+}
+
+.btn {
+    background-color: gray;
+}
+
+.btn:hover {
+    background-color: black;
+}
+
+.btn-home {
+    margin: 10px 0;
+}
+
+/* ************************************************** Login and register pages */
+
+.login-reg-box {
+    margin-top: 100px;
+    background-color: rgba(0,0,0,0.5)
+}
+
+.login-box i {
+    padding-top: 10px;
+}
+
+/* ************************************************** Media Queries */
+
+@media (min-width:385px) {
+    .brand-logo {
+        font-size: 20px !important;
+    }
+}
+
+@media (min-width:534px) {
+    h2 {
+        font-size: 30px !important;
+    }
+
+    .background-container {
+        background-position: center;
+    }
+}
