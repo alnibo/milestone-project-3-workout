@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+<section class="background-container">
 
-<h1> Find Your Workout</h1>
-<h2> Choose a Muscle Group</h2>
+            <div class="row">
+                <div class="home-box col s8 offset-s2">
+                    <div class="row">
+                        <h2>Welcome to<br>Find Your Workout</h2>
+                    </div>
+                    <div class="row">
+                        <p class="home-text">Get inspiration for effective workouts and share your favorite exercises with others.</p>
+                    </div>
+                    <div class="row">
+                        <a href="{{ url_for('login') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m1">Login</a>
+                        <a href="{{ url_for('register') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m2">Register</a>
+                    </div>
+                </div>
+            </div>
 
-<div class="row">
-    <a class="col s6">Push</a>
-    <a class="col s6">Pull</a>
-    <a class="col s6">Legs</a>
-    <a class="col s6">Core</a>
-</div>
-
+</section>
 {% endblock %}
