@@ -11,22 +11,24 @@
 </head>
 <body>
     <header>
+    <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
                 <a href="{{url_for('index')}}" class="brand-logo"><img class="workout-logo"" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="#">Exercises</a></li>
-                    <li><a href="#">Add Exercise</a></li>
+                    <li><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
+                    <li><a href="#">My Exercises</a></li>
                     <li><a href="#">Sign Out</a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="#">Exercises</a></li>
-                    <li><a href="#">Add Exercise</a></li>
+                    <li><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
+                    <li><a href="#">My Exercises</a></li>
                     <li><a href="#">Sign Out</a></li>
                 </ul>
             </div>
         </nav>
+    </div>
     </header>
     <section>
         {% block content %}
