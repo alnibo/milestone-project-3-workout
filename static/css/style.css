@@ -70,6 +70,53 @@ h2 {
     padding-top: 10px;
 }
 
+/* ************************************************** Exercise groups page */
+
+.groups-container {
+    background-image: url(/static/img/back_groups.jpg);
+    background-position: left;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    min-height: 1300px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+}
+
+.groups-box {
+    margin: 10px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: 10px !important;
+}
+
+.groups-box img {
+    opacity: 0.8;
+}
+
+.groups-box img:hover {
+    opacity: 1;
+}
+
+.group-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 45px 5px;
+    font-size: 25px;
+    border: 0.125rem solid black;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
 /* ************************************************** Media Queries */
 
 @media (min-width:385px) {

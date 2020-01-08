@@ -1,14 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h2> Choose a Muscle Group</h2>
-
-<div class="container">
-    <div class="row">
-        <a class="col s6">Push</a>
-        <a class="col s6">Pull</a>
-        <a class="col s6">Legs</a>
-        <a class="col s6">Core</a>
-    </div>
-</div>
+<section class="groups-container">
+                    <div class="row">
+                        <h2>Choose a Muscle Group</h2>
+                    </div>
+                    <div class="row">
+                        <p class="home-text">Choose one of the groups to display exercises for that group.</p>
+                    </div>
+                    <div class="row">
+                        <a href="{{ url_for('push') }}" class="">
+                            <figure class="groups-box col s12 m12 l4 offset-l1">
+                                <img src="static/img/push.jpg" width="400" height="400" alt="Pushup">
+                                <figure>
+                                    <figcaption class="group-name">Push</figcaption>
+                                </figure>
+                            </figure>
+                        </a>
+                        <a href="{{ url_for('pull') }}" class="">
+                            <figure class="groups-box col s12 m12 l4 offset-l1">
+                                <img src="static/img/pull.jpg" width="400" height="400" alt="Pullup">
+                                <figure>
+                                    <figcaption class="group-name">Pull</figcaption>
+                                </figure>
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a href="{{ url_for('legs') }}" class="">
+                            <figure class="groups-box col s12 m12 l4 offset-l1">
+                                <img src="static/img/legs.jpg" width="400" height="400" alt="Squat">
+                                <figure>
+                                    <figcaption class="group-name">Legs</figcaption>
+                                </figure>
+                            </figure>
+                        </a>
+                        <a href="{{ url_for('core') }}" class="">
+                            <figure class="groups-box col s12 m12 l4 offset-l1">
+                                <img src="static/img/core.jpg" width="400" height="400" alt="Situp">
+                                <figure>
+                                    <figcaption class="group-name">Core</figcaption>
+                                </figure>
+                            </figure>
+                        </a>
+                    </div>                
+</section>
 {% endblock %}

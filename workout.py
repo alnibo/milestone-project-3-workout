@@ -60,6 +60,46 @@ def muscle_groups():
     return render_template('groups.html')
 
 
+# Push Exercises
+
+@app.route('/push')
+def push():
+    """
+    Displays all push exercises
+    """
+    return render_template('push.html')
+
+
+# Pull Exercises
+
+@app.route('/pull')
+def pull():
+    """
+    Displays all pull exercises
+    """
+    return render_template('pull.html')
+
+
+# Legs Exercises
+
+@app.route('/legs')
+def legs():
+    """
+    Displays all legs exercises
+    """
+    return render_template('legs.html')
+
+
+# Core Exercises
+
+@app.route('/core')
+def core():
+    """
+    Displays all core exercises
+    """
+    return render_template('core.html')
+
+
 # Set up of IP address and PORT number
 
 if __name__ == '__main__':
