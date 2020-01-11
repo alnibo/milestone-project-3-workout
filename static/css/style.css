@@ -13,8 +13,12 @@
 }
 
 h2 {
-    font-size: 20px !important;
+    font-size: 2,5rem !important;
     text-align: center;
+}
+
+h3 {
+    font-size: 1.7rem;
 }
 
 /* ************************************************** Footer */
@@ -55,7 +59,7 @@ h2 {
     background-color: black;
 }
 
-.btn-home {
+.btn {
     margin: 10px 0;
 }
 
@@ -74,20 +78,18 @@ h2 {
 
 .groups-container {
     background-image: url(/static/img/back_groups.jpg);
-    background-position: left;
+    background-repeat: no-repeat;
     background-size: cover;
+    background-position: 100% center left;
     background-attachment: fixed;
-    height: 100vh;
-    min-height: 1300px;
-    background-color: black;
+    min-height: 100vh;
     color: white;
     text-align: center;
     padding: 80px 0;
 }
 
 .groups-box {
-    margin: 10px;
-    height: 400px;
+    height: 600px;
     overflow: hidden;
     position: relative;
     text-align: center;
@@ -97,6 +99,30 @@ h2 {
 
 .groups-box img {
     opacity: 0.8;
+}
+
+.push-img {
+    background-image: url(/static/img/push1.jpg);
+    background-size: cover;
+    background-position: 50% 25%;
+}
+
+.pull-img {
+    background-image: url(/static/img/pull.jpg);
+    background-size: cover;
+    background-position: 50% 0%;
+}
+
+.legs-img {
+    background-image: url(/static/img/legs.jpg);
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.core-img {
+    background-image: url(/static/img/core.jpg);
+    background-size: cover;
+    background-position: 50% 25%;
 }
 
 .groups-box img:hover {
@@ -115,6 +141,52 @@ h2 {
     width: 130px;
     height: 130px;
     border-radius: 50%;
+}
+
+/* ************************************************** Individual exercise groups pages */
+
+.card {
+    color: black;
+}
+
+.push-pic {
+    background-image: url(/static/img/push1.jpg);
+}
+
+.pull-pic {
+    background-image: url(/static/img/pull.jpg);
+}
+
+.legs-pic {
+    background-image: url(/static/img/legs.jpg);
+}
+
+.core-pic {
+    background-image: url(/static/img/core.jpg);
+}
+
+.card-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 300px;
+}
+
+.header {
+    color: white;
+    font-weight: 300;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 24px;
+}
+
+.exercise-name {
+    padding: 0 10px;
+}
+
+.instructions {
+    padding: 20px;
 }
 
 /* ************************************************** Media Queries */

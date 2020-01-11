@@ -8,14 +8,8 @@ if path.exists("env.py"):
 
 app = Flask(__name__)
 
-app.config["MONGO_URI"] = os.getenv("MONGO_URI")
-app.config["MONGO_DBNAME"] = 'workout'
-
-"""
-MONGODB_URI = os.getenv("MONGO_URI")
-DBS_NAME = "workout"
-COLLECTION_NAME = "exercises"
-"""
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
 
@@ -67,7 +61,8 @@ def push():
     """
     Displays all push exercises
     """
-    return render_template('push.html')
+    return render_template('push.html', exercises=mongo.db.exercises.find({
+                                                "category_name": "Push"}))
 
 
 # Pull Exercises
@@ -77,7 +72,8 @@ def pull():
     """
     Displays all pull exercises
     """
-    return render_template('pull.html')
+    return render_template('pull.html', exercises=mongo.db.exercises.find({
+                                                "category_name": "Pull"}))
 
 
 # Legs Exercises
@@ -87,7 +83,8 @@ def legs():
     """
     Displays all legs exercises
     """
-    return render_template('legs.html')
+    return render_template('legs.html', exercises=mongo.db.exercises.find({
+                                                "category_name": "Legs"}))
 
 
 # Core Exercises
@@ -97,7 +94,8 @@ def core():
     """
     Displays all core exercises
     """
-    return render_template('core.html')
+    return render_template('core.html', exercises=mongo.db.exercises.find({
+                                                "category_name": "Core"}))
 
 
 # Set up of IP address and PORT number

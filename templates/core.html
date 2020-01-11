@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="groups-container">
+	<div class="">
+		<div class="row">
+			<h2>Core Exercises</h2>
+		</div>
+		<div class="row">
+			<p class="home-text">Find your favorite core exercises. To add your own please log in.</p>
+		</div>
+	</div>
+
+	{% for exercise in exercises %}
+
+	<div class="row">
+		<div class="col s12">
+			<div class="card sticky-action horizontal">
+				<div class="card-image core-pic hide-on-small-only">
+					<h3 class="header">Core exercise</h3>
+				</div>
+				<div class="card-stacked">
+					<div class="card-content valign-wrapper">
+						<div>
+                        <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+						<p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
+						<p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
+						<p><strong>Equipment: </strong>{{exercise.equipment}}</p>
+						<p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
+					    </div>
+                    </div>
+					<div class="card-action">
+						<a href="#" class="waves-effect waves-light btn col s10 offset-s1 m4 offset-m1">Edit</a>
+						<a href="#" class="waves-effect waves-light btn col s10 offset-s1 m4 offset-m2">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endfor %}
+
+</section>
+
+{% endblock %}
