@@ -17,14 +17,26 @@
                 <a href="{{url_for('index')}}" class="brand-logo"><img class="workout-logo"" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
-                    <li><a href="#">My Exercises</a></li>
-                    <li><a href="#">Sign Out</a></li>
+                    <li {%- if request.path == url_for('index') %} class="active"{% endif %}><a href="{{ url_for('index') }}">Home</a></li>
+                    {% if current_user.is_anonymous %}
+                    <li {%- if request.path == url_for('login') %} class="active"{% endif %}><a href="{{ url_for('login') }}">Login</a></li>
+                    <li {%- if request.path == url_for('register') %} class="active"{% endif %}><a href="{{ url_for('register') }}">Register</a></li>
+                    {% else %}
+                    <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
+                    <li {%- if request.path == url_for('my_exercises') %} class="active"{% endif %}><a href="#">My Exercises</a></li>
+                    <li {%- if request.path == url_for('logout') %} class="active"{% endif %}><a href="#">Logout</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
-                    <li><a href="#">My Exercises</a></li>
-                    <li><a href="#">Sign Out</a></li>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    {% if current_user.is_anonymous %}
+                    <li {%- if request.path == url_for('login') %} class="active"{% endif %}><a href="{{ url_for('login') }}">Login</a></li>
+                    <li {%- if request.path == url_for('register') %} class="active"{% endif %}><a href="{{ url_for('register') }}">Register</a></li>
+                    {% else %}
+                    <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
+                    <li {%- if request.path == url_for('my_exercises') %} class="active"{% endif %}><a href="#">My Exercises</a></li>
+                    <li {%- if request.path == url_for('logout') %} class="active"{% endif %}><a href="#">Logout</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
