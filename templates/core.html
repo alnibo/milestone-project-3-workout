@@ -30,8 +30,13 @@
 					    </div>
                     </div>
 					<div class="card-action">
-						<a href="#" class="waves-effect waves-light btn col s10 offset-s1 m4 offset-m1">Edit</a>
-						<a href="#" class="waves-effect waves-light btn col s10 offset-s1 m4 offset-m2">Delete</a>
+                        {% if current_user.username == exercise.added_by %}
+						<span class="left-button"><a href="#" class="waves-effect waves-light btn exercise-button">Edit</a></span>
+						<span><a href="#" class="waves-effect waves-light btn exercise-button">Delete</a></span>
+                        {% else %}
+                        <span class="left-button"><a href="#" class="waves-effect waves-light btn btn_small exercise-button">Like<i class="material-icons right">thumb_up</i></a></span>
+                        <span><a href="#" class="waves-effect waves-light btn btn_small exercise-button">Dislike<i class="material-icons right">thumb_down</i></a></span>
+                        {% endif %}
 					</div>
 				</div>
 			</div>
