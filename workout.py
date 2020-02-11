@@ -1,8 +1,8 @@
 import os
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_pymongo import PyMongo
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, ExerciseForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
 from bson.objectid import ObjectId
@@ -38,10 +38,10 @@ def register():
     """
     Enables user to register a new account.
     """
-
+    
     if current_user.is_authenticated:
 
-        flash("You are already logged in.")
+        flash("You are already logged in.", 'error')
         return redirect(url_for('index'))
 
     form = RegistrationForm()
@@ -56,12 +56,11 @@ def register():
                                 'username': request.form['username'].lower(),
                                 'password': password
             })
-
-            flash('Hello {form.username.data.lower()}, you have successfully registered as a new user! You can now log into your account', 'success')
+            flash('You have successfully registered as a new user! You can now log into your account', 'normal')
             return redirect(url_for('login'))
 
         else:
-            flash('This username is already in use. Please try a different one.', 'warning')
+            flash('This username is already in use. Please try a different one.', 'error')
 
     return render_template('register.html', title='Register', form=form)
 
@@ -86,7 +85,7 @@ def login():
 
     if current_user.is_authenticated:
 
-        flash("You are already logged in.")
+        flash("You are already logged in.", 'error')
         return redirect(url_for('index'))
 
     form = LoginForm()
@@ -99,7 +98,8 @@ def login():
 
             user_info = User(user['username'])
             login_user(user_info)
-            flash('Hi {form.username.data.lower()}, you have successfully logged in.', 'success')
+            session['username'] = request.form['username']
+            flash("You have successfully logged in.", 'normal')
             return redirect(url_for('index'))
 
         elif user is None:
@@ -117,21 +117,9 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    session.clear()
+    flash('You have successfully logged out.', 'normal')
     return redirect(url_for('login'))
-
-# My exercises
-
-@app.route('/my_exercises/<username>')
-def my_exercises(username):
-    """
-    Allows user to see all his/her added exercises.
-    """
-
-    user = mongo.db.users.find_one({'username': username})
-
-    user_exercises = mongo.db.reviews.find({'added_by': username}).sort([("_id", -1)])
-
-    return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
 
 # Muscle groups
 
@@ -150,7 +138,7 @@ def push():
     """
     Displays all push exercises
     """
-    return render_template('push.html', exercises = mongo.db.exercises.find({
+    return render_template('push.html', exercises=mongo.db.exercises.find({
                                                 "category_name": "Push"}))
 
 
@@ -161,7 +149,7 @@ def pull():
     """
     Displays all pull exercises
     """
-    return render_template('pull.html', exercises = mongo.db.exercises.find({
+    return render_template('pull.html', exercises=mongo.db.exercises.find({
                                                 "category_name": "Pull"}))
 
 
@@ -172,7 +160,7 @@ def legs():
     """
     Displays all legs exercises
     """
-    return render_template('legs.html', exercises = mongo.db.exercises.find({
+    return render_template('legs.html', exercises=mongo.db.exercises.find({
                                                 "category_name": "Legs"}))
 
 
@@ -183,22 +171,85 @@ def core():
     """
     Displays all core exercises
     """
-    return render_template('core.html', exercises = mongo.db.exercises.find({
+    return render_template('core.html', exercises=mongo.db.exercises.find({
                                                 "category_name": "Core"}))
+
+# My exercises
+
+    """
+    Allows user to see all his/her added exercises.
+    """
+"""
+@app.route('/my_exercises/<username>')
+@login_required
+def my_exercises(username):
+    
+
+    user = mongo.db.users.find_one({'username': username})
+
+    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("_id", -1)])
+
+    return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
+"""
+
+@app.route('/my_exercises')
+@login_required
+def my_exercises():
+    username = current_user.username
+    user = mongo.db.users.find_one({'username': username})
+
+    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("_id", -1)])
+    return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
 
 # Add Exercise
 
-@app.route('/add_exercise/<username>')
+@app.route('/add_exercise')
 @login_required
-def add_exercise(username):
-    user = mongo.db.users.find_one({'username': username})
+def add_exercise():
+    user = session['username']
+    form = ExerciseForm()
 
-    return render_template('add_exercise.html', user=user, title='Add Exercise')
+    return render_template('add_exercise.html', user=user, title='Add Exercise', form=form)
 
+# Insert Exercise
+
+@app.route('/insert_exercise', methods=['POST'])
+@login_required
+def insert_exercise():
+
+    exercises = mongo.db.exercises
+    username = current_user.username
+
+    category_name = request.form['category_name']
+    exercise_name = request.form['exercise_name']
+
+    existing_exercise = mongo.db.exercises.count_documents({'$and':
+        [{'category_name': category_name},
+        {'exercise_name': exercise_name}]
+    })
+
+    if existing_exercise == 0:
+
+        exercises.insert_one({
+            'category_name': request.form['category_name'],
+            'exercise_name': request.form['exercise_name'],
+            'muscles': request.form['muscles'],
+            'exercise_difficulty': request.form['exercise_difficulty'],
+            'equipment': request.form['equipment'],
+            'exercise_instructions': request.form['exercise_instructions'],
+            'added_by': username
+        })
+
+        flash('Your exercise has been successfully added.', 'normal')
+
+    else:
+        flash('An exercise with the same name already exists.', 'error')
+
+    return redirect(url_for('my_exercises'))
 
 # Set up of IP address and PORT number
 
 if __name__ == '__main__':
-    app.run(host = os.environ.get('IP'),
-            port = int(os.environ.get('PORT')),
-            debug =True)
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=True)

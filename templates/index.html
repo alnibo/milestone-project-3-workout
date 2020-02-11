@@ -10,10 +10,16 @@
                     <div class="row">
                         <p class="home-text">Get inspiration for effective workouts and share your favorite exercises with others.</p>
                     </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="row">
+                        <a href="{{ url_for('muscle_groups') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m4">Go to exercises</a>
+                    </div>
+                    {% else %}
                     <div class="row">
                         <a href="{{ url_for('login') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m1">Login</a>
                         <a href="{{ url_for('register') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m2">Register</a>
                     </div>
+                    {% endif %}
                 </div>
             </div>
 

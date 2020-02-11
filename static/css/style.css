@@ -1,3 +1,5 @@
+/* ************************************************** Base */
+
 .nav-wrapper {
     padding-left: 15px;
     background-color: gray;
@@ -12,6 +14,11 @@
     margin-right: 5px;
 }
 
+.dropdown-content{
+   width: max-content !important;
+   height:auto !important;
+}
+
 h2 {
     font-size: 2,5rem !important;
     text-align: center;
@@ -19,6 +26,20 @@ h2 {
 
 h3 {
     font-size: 1.7rem;
+}
+
+.flash_message {
+    background-color: black;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.normal {
+    color: white;
+}
+
+.error {
+    color: red;
 }
 
 /* ************************************************** Footer */
@@ -32,13 +53,13 @@ h3 {
 
 .background-container {
     background-image: url(/static/img/back_img.jpg);
-    background-position: left;
+    background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
-    width: 100vw;
-    background-color: black;
+    background-position: 100% center left;
+    background-attachment: fixed;
+    min-height: 100vh;
     color: white;
-    text-align: center;
+    padding: 80px 0;
 }
 
 .home-box {
@@ -49,6 +70,7 @@ h3 {
 
 .home-text {
     padding: 10px 0;
+    text-align: center;
 }
 
 .btn {
@@ -97,8 +119,12 @@ h3 {
     padding: 10px !important;
 }
 
-.groups-box img {
-    opacity: 0.8;
+.groups-box {
+    opacity: 0.9;
+}
+
+.group-bucket:hover > .groups-box {
+    opacity: 1;
 }
 
 .push-img {
@@ -123,10 +149,6 @@ h3 {
     background-image: url(/static/img/core.jpg);
     background-size: cover;
     background-position: 50% 25%;
-}
-
-.groups-box img:hover {
-    opacity: 1;
 }
 
 .group-name {
@@ -187,6 +209,14 @@ h3 {
 
 .instructions {
     padding: 20px;
+}
+
+.exercise-button {
+    min-width: 145px;
+}
+
+.left-button {
+    margin-right: 20px;
 }
 
 /* ************************************************** Media Queries */
