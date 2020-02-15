@@ -12,21 +12,26 @@ class LoginForm(FlaskForm):
 # Registration Form
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=5, max=25)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=7, max=50)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=5, max=50)])
     password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
 # Add Exercise Form
 
 class ExerciseForm(FlaskForm):
-    category_name = SelectField('Exercise Group', validators=[DataRequired()], choices=[('Push', 'Push'), ('Pull', 'Pull'), ('Legs', 'Legs'), ('Core', 'Core')])
+    category_name = StringField('Exercise Group', validators=[DataRequired()])
     exercise_name = StringField('Exercise Name', validators=[DataRequired()])
     muscles = StringField('Muscles', validators=[DataRequired()])
     exercise_difficulty = StringField('Exercise Difficulty', validators=[DataRequired()])
     equipment = StringField('Equipment', validators=[DataRequired()])
     exercise_instructions = TextAreaField('Exercise Instructions', validators=[DataRequired()])
     submit = SubmitField('Add Exercise')
+
+"""
+category_name = SelectField('Exercise Group', validators=[DataRequired()], choices=[('Push', 'Push'), ('Pull', 'Pull'), ('Legs', 'Legs'), ('Core', 'Core')])
+exercise_difficulty = SelectField('Exercise Difficulty', validators=[DataRequired()], choices=[('easy', 'easy'), ('medium', 'medium'), ('difficult', 'difficult')])
+"""
 
 """
     def validate_username(self, username):

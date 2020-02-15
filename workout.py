@@ -132,78 +132,60 @@ def muscle_groups():
 
 
 # Push Exercises
+# Displays all push exercises
 
 @app.route('/push')
 def push():
-    """
-    Displays all push exercises
-    """
+
     return render_template('push.html', exercises=mongo.db.exercises.find({
-                                                "category_name": "Push"}))
+                                                "category_name": "Push"}).sort([("like_total", 1)]))
 
 
 # Pull Exercises
+# Displays all pull exercises
 
 @app.route('/pull')
 def pull():
-    """
-    Displays all pull exercises
-    """
+
     return render_template('pull.html', exercises=mongo.db.exercises.find({
-                                                "category_name": "Pull"}))
+                                                "category_name": "Pull"}).sort([("_id", 1)]))
 
 
 # Legs Exercises
+# Displays all legs exercises
 
 @app.route('/legs')
 def legs():
-    """
-    Displays all legs exercises
-    """
+
     return render_template('legs.html', exercises=mongo.db.exercises.find({
-                                                "category_name": "Legs"}))
+                                                "category_name": "Legs"}).sort([("_id", 1)]))
 
 
 # Core Exercises
+# Displays all core exercises
 
 @app.route('/core')
 def core():
-    """
-    Displays all core exercises
-    """
+
     return render_template('core.html', exercises=mongo.db.exercises.find({
-                                                "category_name": "Core"}))
+                                                "category_name": "Core"}).sort([("_id", 1)]))
 
 # My exercises
-
-    """
-    Allows user to see all his/her added exercises.
-    """
-"""
-@app.route('/my_exercises/<username>')
-@login_required
-def my_exercises(username):
-    
-
-    user = mongo.db.users.find_one({'username': username})
-
-    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("_id", -1)])
-
-    return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
-"""
+# Allows user to see all his/her added exercises.
 
 @app.route('/my_exercises')
 @login_required
 def my_exercises():
+
     username = current_user.username
     user = mongo.db.users.find_one({'username': username})
+    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("category_name", 1)])
 
-    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("_id", -1)])
     return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
 
 # Add Exercise
 
-@app.route('/add_exercise')
+@app.route('/add_exercise', methods=['GET', 'POST'])
 @login_required
 def add_exercise():
     user = session['username']
@@ -237,7 +219,11 @@ def insert_exercise():
             'exercise_difficulty': request.form['exercise_difficulty'],
             'equipment': request.form['equipment'],
             'exercise_instructions': request.form['exercise_instructions'],
-            'added_by': username
+            'added_by': username,
+            'like': [],
+            'dislike': [],
+            'like_total': 0,
+            'dislike_total': 0
         })
 
         flash('Your exercise has been successfully added.', 'normal')
@@ -246,6 +232,140 @@ def insert_exercise():
         flash('An exercise with the same name already exists.', 'error')
 
     return redirect(url_for('my_exercises'))
+
+# Edit Exercise
+
+@app.route('/edit_exercise/<exercise_id>', methods=['GET', 'POST'])
+@login_required
+def edit_exercise(exercise_id):
+    
+    the_exercise = mongo.db.exercises.find_one({"_id": ObjectId(exercise_id)})
+    form = ExerciseForm()
+
+    return render_template('edit_exercise.html', exercise=the_exercise, form=form)
+
+# Update Exercise
+
+@app.route('/update_exercise/<exercise_id>', methods=['GET', 'POST'])
+@login_required
+def update_exercise(exercise_id):
+    
+    exercises = mongo.db.exercises
+
+    exercises.update({'_id': ObjectId(exercise_id)}, {'$set':
+        {'category_name': request.form.get('category_name'),
+        'exercise_name': request.form.get('exercise_name'),
+        'muscles': request.form.get('muscles'),
+        'exercise_difficulty': request.form.get('exercise_difficulty'),
+        'equipment': request.form.get('equipment'),
+        'exercise_instructions': request.form.get('exercise_instructions')}
+    })
+
+    return redirect(url_for('my_exercises'))
+
+# Delete Exercise
+
+@app.route('/delete_exercise/<exercise_id>')
+@login_required
+def delete_exercise(exercise_id):
+
+    mongo.db.exercises.remove({'_id': ObjectId(exercise_id)})
+
+    return redirect(url_for('my_exercises'))
+
+# Like / Dislike Functionality
+
+''' Define general functions that will add or remove vote from username list and vote total
+    and set variable for keys like/dislike and like_total/dislike_total
+'''
+
+def add_vote(vote_type, vote_type_total, exercise_id, username):
+
+    mongo.db.exercises.update({"_id": ObjectId(exercise_id)}, {'$push': {vote_type: {'username': username}}})
+
+    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)}, {'$inc': {vote_type_total: 1}})
+
+def remove_vote(vote_type, vote_type_total, exercise_id, username):
+
+    mongo.db.exercises.update({"_id": ObjectId(exercise_id)}, {'$pull': {vote_type: {'username': username}}})
+
+    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)}, {'$inc': {vote_type_total: -1}})
+
+# Like
+# Functions that allows liking
+
+@app.route('/like/<exercise_id>', methods=['GET', 'POST'])
+@login_required
+def like(exercise_id):
+
+    username = current_user.username
+
+    # Check if current user has already liked the exercise
+    match_count_like = mongo.db.exercises.count_documents({
+        '_id': ObjectId(exercise_id),
+        'like': {'$elemMatch': {"username": username}},
+    })
+
+    # Check if current user has already disliked the exercise
+    match_count_dislike = mongo.db.exercises.count_documents({
+        '_id': ObjectId(exercise_id),
+        'dislike': {'$elemMatch': {"username": username}},
+    })
+
+    # If user already liked the exercise then remove his/her like
+    if match_count_like > 0:
+
+        remove_vote('like', 'like_total', exercise_id, username)
+
+    # If user already disliked the exercise then remove his/her dislike and add like
+    elif match_count_dislike > 0:
+
+        add_vote('like', 'like_total', exercise_id, username)
+        remove_vote('dislike', 'dislike_total', exercise_id, username)
+
+    # If user neither liked nor disliked the exercise add like
+    else:
+
+        add_vote('like', 'like_total', exercise_id, username)
+
+    return redirect(url_for('my_exercises', exercise_id=exercise_id))
+
+# Disike
+# Functions that allows disliking
+
+@app.route('/dislike/<exercise_id>', methods=['GET', 'POST'])
+@login_required
+def dislike(exercise_id):
+
+    username = current_user.username
+
+    # Check if current user has already liked the exercise
+    match_count_like = mongo.db.exercises.count_documents({
+        '_id': ObjectId(exercise_id),
+        'like': {'$elemMatch': {"username": username}},
+    })
+
+    # Check if current user has already disliked the exercise
+    match_count_dislike = mongo.db.exercises.count_documents({
+        '_id': ObjectId(exercise_id),
+        'dislike': {'$elemMatch': {"username": username}},
+    })
+
+    # If user already disliked the exercise then remove his/her dislike
+    if match_count_dislike > 0:
+
+        remove_vote('dislike', 'dislike_total', exercise_id, username)
+
+    # If user already liked the review then remove his/her like and add dislike                                        
+    elif match_count_like > 0:
+        remove_vote('like', 'like_total', exercise_id, username)
+        add_vote('dislike', 'dislike_total', exercise_id, username)
+
+    # If user neither liked nor disliked the review add dislike
+    else:
+        add_vote('dislike', 'dislike_total', exercise_id, username)
+
+    return redirect(url_for('my_exercises', exercise_id=exercise_id))
 
 # Set up of IP address and PORT number
 

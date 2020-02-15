@@ -21,21 +21,24 @@
 				</div>
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
-						<div>
-                        <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
-						<p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
-						<p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
-						<p><strong>Equipment: </strong>{{exercise.equipment}}</p>
-						<p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
+						<div class="full-content">
+                            <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+                            <div class="vote">
+                                <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+                                <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+                            </div>
+                            <p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
+                            <p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
+                            <p><strong>Equipment: </strong>{{exercise.equipment}}</p>
+                            <p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
 					    </div>
                     </div>
 					<div class="card-action">
                         {% if current_user.username == exercise.added_by %}
-						<span class="left-button"><a href="#" class="waves-effect waves-light btn exercise-button">Edit</a></span>
-						<span><a href="#" class="waves-effect waves-light btn exercise-button">Delete</a></span>
+						<span class="left-button"><a href="{{url_for('edit_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn exercise-button">Edit</a></span>
+						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn exercise-button">Delete</a></span>
                         {% else %}
-                        <span class="left-button"><a href="#" class="waves-effect waves-light btn btn_small exercise-button">Like<i class="material-icons right">thumb_up</i></a></span>
-                        <span><a href="#" class="waves-effect waves-light btn btn_small exercise-button">Dislike<i class="material-icons right">thumb_down</i></a></span>
+                        <p>This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
                         {% endif %}
 					</div>
 				</div>
@@ -44,6 +47,12 @@
 	</div>
 
 	{% endfor %}
+
+    <div class="row">
+		<div class="col s12 center-align">
+            <a href="{{ url_for('add_exercise') }}" class="waves-effect waves-light btn">Add A New Exercise</a>
+        </div>
+	</div>
 
 </section>
 

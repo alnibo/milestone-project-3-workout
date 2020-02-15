@@ -75,15 +75,22 @@ h3 {
 
 .btn {
     background-color: gray;
+    margin: 10px 0;
 }
 
 .btn:hover {
     background-color: black;
 }
 
-.btn {
+.btn-small {
+    background-color: gray;
     margin: 10px 0;
 }
+
+.btn-small:hover {
+    background-color: black;
+}
+
 
 /* ************************************************** Login and register pages */
 
@@ -203,8 +210,28 @@ h3 {
     padding: 24px;
 }
 
+.full-content {
+    width: 100%;
+}
+
 .exercise-name {
     padding: 0 10px;
+}
+
+.vote {
+    padding-bottom: 40px;
+}
+
+.vote-button {
+    color: black;
+}
+
+.vote-button:hover {
+    color: grey;
+}
+
+.total-count {
+    padding-left: 10px;
 }
 
 .instructions {
@@ -217,6 +244,12 @@ h3 {
 
 .left-button {
     margin-right: 20px;
+}
+
+/* ************************************************** Edit Page */
+
+.btn-edit {
+    min-width: 156px;
 }
 
 /* ************************************************** Media Queries */
