@@ -3,14 +3,18 @@
 <section class="background-container">
 	<div class="row">
 		<div class="login-reg-box col s8 offset-s2">
+
+            <!-- Header -->
 			<div class="row">
 				<h2>Edit your exercise</h2>
 			</div>
 			<div class="row center-align">
 				<span class="col s10 offset-s1">Please make the necessary changes in the corresponding fields below and then click on Save Changes.</span>
 			</div>
+
 			<div class="row">
 
+                <!-- Edit form -->
                 <form action="{{ url_for('update_exercise', exercise_id=exercise._id) }}" method="POST" class="col s10 offset-s1">
                     <div class="row">
                         <div class="input-field col s12">
@@ -56,57 +60,15 @@
                     </div>
                     <div class="row center">
 
-                        <!-- Submit button -->
+                        <!-- Submit and cancel button -->
                         <div class="col m6 s12">
-                            <button class="btn waves-effect waves-light btn-edit" type="submit" name="action">Save Changes</button>
+                            <button class="btn waves-effect waves-light home-btn btn-edit" type="submit" name="action">Save Changes</button>
                         </div>
-                        
-                        <!-- Cancel updates button -->
                         <div class="col m6 s12">
-                            <a class="btn waves-effect waves-light btn-edit" href="{{url_for('my_exercises')}}">Cancel</a>
+                            <a class="btn waves-effect waves-light home-btn btn-edit" href="{{url_for('my_exercises')}}">Cancel</a>
                         </div>
                     </div>                    
                 </form>
-
-				<!--<form action="{{ url_for('insert_exercise') }}" method="POST" class="col s10 offset-s1">
-					
-					<div class="row">
-						<div class="form-field col s12">
-                            <i class="material-icons prefix">dashboard</i>{{ form.category_name.label }}<br>{{ form.category_name }}
-                        </div>
-					</div>
-					<div class="row">
-					    <div class="input-field col s12">
-							<i class="material-icons prefix">directions_run</i>{{ form.exercise_name.label }}<br>{{ form.exercise_name(size=32) }}
-                        </div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix">linear_scale</i>{{ form.muscles.label }}<br>{{ form.muscles(size=32) }}
-                        </div>
-					</div>
-                    <div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix">network_check</i>{{ form.exercise_difficulty.label }}<br>{{ form.exercise_difficulty(size=32) }}
-                        </div>
-					</div>
-                    <div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix">settings</i>{{ form.equipment.label }}<br>{{ form.equipment(size=32) }}
-                        </div>
-					</div>
-                    <div class="row">
-						<div class="input-field col s12">
-							<i class="material-icons prefix">info</i>{{ form.exercise_instructions.label }}<br><br>{{ form.exercise_instructions(size=32) }}
-                        </div>
-					</div>
-                    
-					<div class="row">
-						<div class="col s12 center-align">
-							<button class="waves-effect waves-light btn">{{ form.submit() }}</button>
-                        </div>
-					</div>
-				</form>-->
 			</div>
 		</div>
 	</div>

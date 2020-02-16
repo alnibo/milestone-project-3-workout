@@ -179,9 +179,10 @@ def my_exercises():
 
     username = current_user.username
     user = mongo.db.users.find_one({'username': username})
-    user_exercises = mongo.db.exercises.find({'added_by': username}).sort([("category_name", 1)])
+    added_exercises = mongo.db.exercises.find({'added_by': username}).sort([("category_name", 1)])
+    liked_exercises = mongo.db.exercises.find({'like': {'$elemMatch': {"username": username}}}).sort([("category_name", 1)])
 
-    return render_template('my_exercises.html', user=user, exercises=user_exercises, title='My Exercises')
+    return render_template('my_exercises.html', user=user, added_exercises=added_exercises, liked_exercises=liked_exercises, title='My Exercises')
 
 # Add Exercise
 

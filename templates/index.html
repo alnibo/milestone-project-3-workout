@@ -12,13 +12,13 @@
                     </div>
                     {% if current_user.is_authenticated %}
                     <div class="row">
-                        <a href="{{ url_for('muscle_groups') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m1">All Exercises</a>
-                        <a href="{{ url_for('my_exercises') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m2">My Exercises</a>
+                        <a href="{{ url_for('muscle_groups') }}" class="waves-effect waves-light btn home-btn col s12 m4 offset-m1">All Exercises</a>
+                        <a href="{{ url_for('my_exercises') }}" class="waves-effect waves-light btn home-btn col s12 m4 offset-m2">My Exercises</a>
                     </div>
                     {% else %}
                     <div class="row">
-                        <a href="{{ url_for('login') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m1">Login</a>
-                        <a href="{{ url_for('register') }}" class="waves-effect waves-light btn btn-home col s12 m4 offset-m2">Register</a>
+                        <a href="{{ url_for('login') }}" class="waves-effect waves-light btn home-btn col s12 m4 offset-m1">Login</a>
+                        <a href="{{ url_for('register') }}" class="waves-effect waves-light btn home-btn col s12 m4 offset-m2">Register</a>
                     </div>
                     {% endif %}
                 </div>

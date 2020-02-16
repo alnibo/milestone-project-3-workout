@@ -20,7 +20,7 @@
 }
 
 h2 {
-    font-size: 2,5rem !important;
+    font-size: 3rem !important;
     text-align: center;
 }
 
@@ -40,6 +40,10 @@ h3 {
 
 .error {
     color: red;
+}
+
+#back-to-top:hover {
+    background-color: grey!important;
 }
 
 /* ************************************************** Footer */
@@ -65,32 +69,24 @@ h3 {
 .home-box {
     margin-top: 130px;
     padding: 10px;
-    background-color: rgba(0,0,0,0.5)
+    background-color: rgba(0,0,0,0.5);
 }
 
 .home-text {
-    padding: 10px 0;
     text-align: center;
+    width: 60%;
+    margin: auto;
+    padding: 20px;
 }
 
-.btn {
-    background-color: gray;
+.home-btn {
+    background-color: grey;
     margin: 10px 0;
 }
 
-.btn:hover {
+.home-btn:hover {
     background-color: black;
 }
-
-.btn-small {
-    background-color: gray;
-    margin: 10px 0;
-}
-
-.btn-small:hover {
-    background-color: black;
-}
-
 
 /* ************************************************** Login and register pages */
 
@@ -172,6 +168,15 @@ h3 {
     border-radius: 50%;
 }
 
+.other-btn {
+    background-color: black;
+    margin: 10px 0;
+}
+
+.other-btn:hover {
+    background-color: grey;
+}
+
 /* ************************************************** Individual exercise groups pages */
 
 .card {
@@ -242,8 +247,17 @@ h3 {
     min-width: 145px;
 }
 
-.left-button {
-    margin-right: 20px;
+/* ************************************************** User Page */
+
+.top-text {
+    background-color: rgba(0,0,0,0.5);
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+}
+
+.divider {
+    margin: 40px 10px 60px;
 }
 
 /* ************************************************** Edit Page */
@@ -261,11 +275,13 @@ h3 {
 }
 
 @media (min-width:534px) {
-    h2 {
-        font-size: 30px !important;
-    }
-
     .background-container {
         background-position: center;
+    }
+}
+
+@media (min-width:683px) {
+    .left-button {
+         margin-right: 20px;
     }
 }

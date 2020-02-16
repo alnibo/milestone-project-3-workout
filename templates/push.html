@@ -4,10 +4,10 @@
 <section class="groups-container">
 	<div class="">
 		<div class="row">
-			<h2>Push Exercises</h2>
+			<h1>Push Exercises</h1>
 		</div>
 		<div class="row">
-			<p class="home-text">Find your favorite push exercises. To add your own please log in.</p>
+			<p class="top-text">Find your favorite push exercises. To add your own please log in.</p>
 		</div>
 	</div>
 
@@ -35,8 +35,8 @@
                     </div>
 					<div class="card-action">
                         {% if current_user.username == exercise.added_by %}
-						<span class="left-button"><a href="{{url_for('edit_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn exercise-button">Edit</a></span>
-						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn exercise-button">Delete</a></span>
+						<span class="left-button"><a href="{{url_for('edit_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Edit</a></span>
+						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
                         {% else %}
                         <p>This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
                         {% endif %}
@@ -50,9 +50,16 @@
 
     <div class="row">
 		<div class="col s12 center-align">
-            <a href="{{ url_for('add_exercise') }}" class="waves-effect waves-light btn">Add A New Exercise</a>
+            <a href="{{ url_for('add_exercise') }}" class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
         </div>
 	</div>
+
+    <!-- Back to top -->
+    <div class="fixed-action-btn">
+      <a id="back-to-top" class="btn-floating btn-large black scale-transition">
+        <i class="large material-icons">keyboard_arrow_up</i>
+      </a>
+    </div>
 
 </section>
 
