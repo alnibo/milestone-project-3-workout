@@ -14,7 +14,10 @@
 					{{ form.hidden_tag() }}
 					<div class="row">
 						<div class="input-field col s12">
-                            <i class="material-icons prefix">dashboard</i>{{ form.category_name.label }}<br>{{ form.category_name }}
+                            <label>{{ form.category_name.label }}</label>
+                            <select>
+                                <option value="{{ form.category_name }}">{{ form.category_name }}</option>
+                            </select>
                         </div>
 					</div>
 					<div class="row">
