@@ -328,7 +328,7 @@ def like(exercise_id):
     else:
 
         add_vote('like', 'like_total', exercise_id, username)
-
+    
     return redirect(url_for('my_exercises', exercise_id=exercise_id))
 
 # Disike

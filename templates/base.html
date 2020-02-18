@@ -14,32 +14,31 @@
         <ul class="side-nav" id="mobile-demo">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if current_user.is_authenticated %}
-            <li><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
-            <li><a href="{{url_for('my_exercises')}}">My Exercises</a></li>
-            <li><a href="{{url_for('logout')}}">Logout</a></li>
+            <li><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
+            <li><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
             <li><a href="{{ url_for('login') }}">Login</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
         </ul>
-
-        <div class="navbar-fixed">
+        
+        <div class="navbar">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="{{url_for('index')}}" class="brand-logo"><img class="workout-logo"" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
+                    <a href="{{ url_for('index') }}" class="brand-logo"><img class="workout-logo"" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li {%- if request.path == url_for('index') %} class="active"{% endif %}><a href="{{ url_for('index') }}">Home</a></li>
                         {% if current_user.is_authenticated %}
-                        <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a href="{{url_for('muscle_groups')}}">All Exercises</a></li>
-                        <li {%- if request.path == url_for('my_exercises') %} class="active"{% endif %}><a href="{{url_for('my_exercises')}}">My Exercises</a></li>
-                        <li {%- if request.path == url_for('logout') %} class="active"{% endif %}><a href="{{url_for('logout')}}">Logout</a></li>
+                        <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
+                        <li {%- if request.path == url_for('my_exercises') %} class="active"{% endif %}><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
+                        <li {%- if request.path == url_for('logout') %} class="active"{% endif %}><a href="{{ url_for('logout') }}">Logout</a></li>
                         {% else %}
                         <li {%- if request.path == url_for('login') %} class="active"{% endif %}><a href="{{ url_for('login') }}">Login</a></li>
                         <li {%- if request.path == url_for('register') %} class="active"{% endif %}><a href="{{ url_for('register') }}">Register</a></li>
                         {% endif %}
                     </ul>
-
                 </div>
             </nav>
         </div>
@@ -66,6 +65,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(".button-collapse").sideNav();
+            $(".dropdown-trigger").dropdown();
         });
 
         if ($('#back-to-top').length) {

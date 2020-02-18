@@ -20,22 +20,15 @@ class RegistrationForm(FlaskForm):
 # Add Exercise Form
 
 class ExerciseForm(FlaskForm):
-    category_name = StringField('Exercise Group', validators=[DataRequired()])
+    category_name = SelectField('Exercise Group', validators=[DataRequired()], choices=[('Push', 'Push'), ('Pull', 'Pull'), ('Legs', 'Legs'), ('Core', 'Core')])
     exercise_name = StringField('Exercise Name', validators=[DataRequired()])
     muscles = StringField('Muscles', validators=[DataRequired()])
-    exercise_difficulty = StringField('Exercise Difficulty', validators=[DataRequired()])
+    exercise_difficulty = SelectField('Exercise Difficulty', validators=[DataRequired()], choices=[('easy', 'easy'), ('medium', 'medium'), ('difficult', 'difficult')])
     equipment = StringField('Equipment', validators=[DataRequired()])
     exercise_instructions = TextAreaField('Exercise Instructions', validators=[DataRequired()])
     submit = SubmitField('Add Exercise')
 
 """
-category_name = SelectField('Exercise Group', validators=[DataRequired()], choices=[('Push', 'Push'), ('Pull', 'Pull'), ('Legs', 'Legs'), ('Core', 'Core')])
-exercise_difficulty = SelectField('Exercise Difficulty', validators=[DataRequired()], choices=[('easy', 'easy'), ('medium', 'medium'), ('difficult', 'difficult')])
-"""
-
-"""
-    def validate_username(self, username):
-        user = User.mongo.db.users.filter_by(username=username.data).first()
-        if user is not None:
-            raise ValidationError('Please use a different username.')
+category_name = StringField('Exercise Group', validators=[DataRequired()])
+exercise_difficulty = StringField('Exercise Difficulty', validators=[DataRequired()])
 """
