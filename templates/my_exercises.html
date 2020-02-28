@@ -4,7 +4,7 @@
 <section class="groups-container">
 	<div class="">
 		<div class="row">
-			<h1>{{ user.username[0]|upper}}{{user.username[1:] }}'s Page</h1>
+			<h1>{{ user.username[0]|upper}}{{user.username[1:] }}'s Exercises</h1>
 		</div>
 		<div class="row">
 			<p class="top-text">Here you can find all exercises that you have liked and further down all the ones that you have added to this website.</p>
@@ -22,23 +22,9 @@
 	<div class="row">
 		<div class="col s12">
 			<div class="card sticky-action horizontal">
-                {% if exercise.category_name == "Push" %}
-                <div class="card-image push-pic hide-on-small-only">
-					<h3 class="header">Push exercise</h3>
-				</div>
-                {% elif exercise.category_name == "Pull" %}
-                <div class="card-image pull-pic hide-on-small-only">
-					<h3 class="header">Pull exercise</h3>
-				</div>
-                {% elif exercise.category_name == "Legs" %}
-                <div class="card-image legs-pic hide-on-small-only">
-					<h3 class="header">Legs exercise</h3>
-				</div>
-                {% else %}
-				<div class="card-image core-pic hide-on-small-only">
-					<h3 class="header">Core exercise</h3>
-				</div>
-                {% endif %}
+                <a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only" href="{{ url_for('get_category', category=exercise.category_name) }}">
+                    <h3 class="header">{{exercise.category_name.title()}} exercise</h3>
+                </a>
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
@@ -55,7 +41,7 @@
                     </div>
 					<div class="card-action">
 					    {% if current_user.username == exercise.added_by %}
-						<span class="left-button"><a href="{{url_for('edit_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Edit</a></span>
+						<span class="left-button"><a href="{{url_for('edit_exercise', category=exercise.category_name, exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Edit</a></span>
 						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
                         {% else %}
                         <p>This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
@@ -69,7 +55,7 @@
     {% else %}
 
     <div class="row">
-		<p class="home-text">You haven't liked any exercises yet.</p>
+		<p class="top-text">You haven't liked any exercises yet. Go to <a href="{{ url_for('muscle_groups') }}">All Exercises</a> to get inspiration!</p>
 	</div>
 
 	{% endfor %}
@@ -85,23 +71,9 @@
 	<div class="row">
 		<div class="col s12">
 			<div class="card sticky-action horizontal">
-                {% if exercise.category_name == "Push" %}
-                <div class="card-image push-pic hide-on-small-only">
-					<h3 class="header">Push exercise</h3>
-				</div>
-                {% elif exercise.category_name == "Pull" %}
-                <div class="card-image pull-pic hide-on-small-only">
-					<h3 class="header">Pull exercise</h3>
-				</div>
-                {% elif exercise.category_name == "Legs" %}
-                <div class="card-image legs-pic hide-on-small-only">
-					<h3 class="header">Legs exercise</h3>
-				</div>
-                {% else %}
-				<div class="card-image core-pic hide-on-small-only">
-					<h3 class="header">Core exercise</h3>
-				</div>
-                {% endif %}
+                <a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only" href="{{ url_for('get_category', category=exercise.category_name) }}">
+                    <h3 class="header">{{exercise.category_name.title()}} exercise</h3>
+                </a>
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
@@ -117,7 +89,7 @@
                         </div>
                     </div>
 					<div class="card-action">
-					    <span class="left-button"><a href="{{url_for('edit_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn  other-btn exercise-button">Edit</a></span>
+					    <span class="left-button"><a href="{{url_for('edit_exercise', category=exercise.category_name, exercise_id=exercise._id)}}" class="waves-effect waves-light btn  other-btn exercise-button">Edit</a></span>
 						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
 					</div>
 				</div>
@@ -128,14 +100,14 @@
     {% else %}
 
     <div class="row">
-		<p class="home-text">You haven't added any exercises yet.</p>
+		<p class="top-text">You haven't added any exercises yet. Click on the button below to add your own exercises!</p>
 	</div>
 
 	{% endfor %}
 
     <div class="row">
 		<div class="col s12 center-align">
-            <a href="{{ url_for('add_exercise') }}" class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
+            <a href="{{ url_for('add_exercise', category='my_exercises') }}" class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
         </div>
 	</div>
 

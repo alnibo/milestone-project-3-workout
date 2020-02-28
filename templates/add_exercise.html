@@ -10,46 +10,52 @@
 				<span class="col s10 offset-s1">Please fill out the following fields in order to add a new exercise.</span>
 			</div>
 			<div class="row">
-				<form action="{{ url_for('insert_exercise') }}" method="POST" class="col s10 offset-s1">
+				<form action="{{ url_for('insert_exercise', category=category) }}" method="POST" class="col s10 offset-s1">
 					{{ form.hidden_tag() }}
-					<div class="row">
-						<div class="input-field col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+							<i class="material-icons prefix">dashboard</i>
                             <label>{{ form.category_name.label }}</label>
-                            <select>
-                                <option value="{{ form.category_name }}">{{ form.category_name }}</option>
+							<select>
+                               <option value="{{ form.category_name }}">{{ form.category_name }}</option>
                             </select>
                         </div>
-					</div>
+                    </div>
+					
 					<div class="row">
-					    <div class="input-field col s12">
+						<div class="input-field col s12">
 							<i class="material-icons prefix">directions_run</i>{{ form.exercise_name.label }}<br>{{ form.exercise_name(size=32) }}
                         </div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">linear_scale</i>{{ form.muscles.label }}<br>{{ form.muscles(size=32) }}
-                        </div>
+                           </div>
 					</div>
-                    <div class="row">
+					<div class="row">
 						<div class="input-field col s12">
-							<i class="material-icons prefix">network_check</i>{{ form.exercise_difficulty.label }}<br>{{ form.exercise_difficulty(size=32) }}
-                        </div>
+							<i class="material-icons prefix">network_check</i>
+							<label>{{ form.exercise_difficulty.label }}</label>
+							<select>
+                               <option value="{{ form.exercise_difficulty }}">{{ form.exercise_difficulty }}</option>
+                            </select>
+						</div>
 					</div>
-                    <div class="row">
+					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">settings</i>{{ form.equipment.label }}<br>{{ form.equipment(size=32) }}
-                        </div>
+                           </div>
 					</div>
-                    <div class="row">
+					<div class="row">
 						<div class="input-field col s12">
-							<i class="material-icons prefix">info</i>{{ form.exercise_instructions.label }}<br><br>{{ form.exercise_instructions(size=32) }}
+						    <i class="material-icons prefix">info</i>{{ form.exercise_instructions.label }}<br><br>{{ form.exercise_instructions(size=32) }}
                         </div>
 					</div>
-                    
+
 					<div class="row">
 						<div class="col s12 center-align">
 							<button class="waves-effect waves-light btn home-btn">{{ form.submit() }}</button>
-                        </div>
+						</div>
 					</div>
 				</form>
 			</div>

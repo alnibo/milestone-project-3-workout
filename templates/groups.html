@@ -8,14 +8,14 @@
         <p class="top-text">Choose one of the groups to display exercises for that group.</p>
     </div>
     <div class="row">
-        <a href="{{ url_for('push') }}" class="group-bucket">
+        <a href="{{ url_for('get_category', category='push') }}" class="group-bucket">
             <figure class="groups-box push-img col s12 m12 l5 offset-l1">
                 <figure>
                     <figcaption class="group-name">Push</figcaption>
                 </figure>
             </figure>
         </a>
-        <a href="{{ url_for('pull') }}" class="group-bucket">
+        <a href="{{ url_for('get_category', category='pull') }}" class="group-bucket">
             <figure class="groups-box pull-img col s12 m12 l5">
                 <figure>
                     <figcaption class="group-name">Pull</figcaption>
@@ -24,14 +24,14 @@
         </a>
     </div>
     <div class="row">
-        <a href="{{ url_for('legs') }}" class="group-bucket">
+        <a href="{{ url_for('get_category', category='legs') }}" class="group-bucket">
             <figure class="groups-box legs-img col s12 m12 l5 offset-l1">
                 <figure>
                     <figcaption class="group-name">Legs</figcaption>
                 </figure>
             </figure>
         </a>
-        <a href="{{ url_for('core') }}" class="group-bucket">
+        <a href="{{ url_for('get_category', category='core') }}" class="group-bucket">
             <figure class="groups-box core-img col s12 m12 l5">
                 <figure>
                     <figcaption class="group-name">Core</figcaption>
