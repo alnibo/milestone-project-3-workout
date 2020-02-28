@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="groups-container">
+	<div class="">
+		<div class="row">
+			<h1>{{category.title()}} Exercises</h1>
+		</div>
+		<div class="row">
+			<p class="top-text">Find all {{category}} exercises here. To add your own please click on the button on the bottom.</p>
+		</div>
+	</div>
+
+	{% for exercise in exercises %}
+
+	<div class="row">
+		<div class="col s12">
+			<div class="card sticky-action horizontal">
+                <div class="card-image {{category.lower()}}-pic hide-on-small-only">
+                    <h3 class="header">{{category.title()}} exercise</h3>
+                </div>
+				<div class="card-stacked">
+					<div class="card-content valign-wrapper">
+						<div class="full-content">
+                            <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+                            <div class="vote">
+                                <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+                                <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+                            </div>
+                            <p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
+						    <p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
+						    <p><strong>Equipment: </strong>{{exercise.equipment}}</p>
+						    <p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
+					    </div>
+                    </div>
+					<div class="card-action">
+                        {% if current_user.username == exercise.added_by %}
+                        <p>This exercise was added by you.</p>
+						<span class="left-button"><a href="{{url_for('edit_exercise', category=category, exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Edit</a></span>
+						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
+                        {% else %}
+                        <p>This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endfor %}
+
+    <div class="row">
+		<div class="col s12 center-align">
+            <a href="{{ url_for('add_exercise', category=category) }}" class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
+        </div>
+	</div>
+
+    <!-- Back to top -->
+    <div class="fixed-action-btn">
+      <a id="back-to-top" class="btn-floating btn-large black scale-transition">
+        <i class="large material-icons">keyboard_arrow_up</i>
+      </a>
+    </div>
+
+</section>
+
+{% endblock %}
