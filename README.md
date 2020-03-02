@@ -9,8 +9,8 @@ This website will help you get inspiration and ideas for your next workout. You 
 1. [Demo](#demo)
 2. [UX](#ux)
 3. [Database](#database)
-4. [Features](#Features)
-5. [Technologies Used](#technologies used)
+4. [Features](#features)
+5. [Technologies Used](#technologies-used)
 6. [Testing](#testing)
 7. [Deployment](#deployment)
 8. [Credits](#credits)
@@ -50,7 +50,7 @@ As a user I expect/would like/need:
 
 ### Wireframes
 
-In the planing process following [wireframes]() were created in order to design the layout for this project for mobile, medium and desktop views.
+In the planing process using [Balsamiq](https://balsamiq.cloud/) following [wireframes](https://github.com/alnibo/milestone-project-3-workout/tree/master/wireframes) were created in order to design the layout for this project for mobile, medium and desktop views.
 
 ## Database
 
@@ -63,25 +63,27 @@ Exercise collection holds all the information for each of the exercises and user
 ### Exercise collection
 
 | Key in DB | Data Type |
-| _id | ObjectId |
-| category_name | String |
-| exercise_name | String |
-| muslces | String |
-| exercise_difficulty | String |
-| equipment | String |
-| exercise_instructions | String |
-| added_by | String |
-| like | Array |
-| dislike | Array |
-| like_total | Int |
-| dislike_total | Int |
+--- | ---
+_id | ObjectId
+category_name | String
+exercise_name | String
+muslces | String
+exercise_difficulty | String
+equipment | String
+exercise_instructions | String
+added_by | String
+like | Array
+dislike | Array
+like_total | Int
+dislike_total | Int
 
 ### Users collection
 
 | Key in DB | Data Type |
-| _id | ObjectId |
-| username | String |
-| password | String |
+--- | ---
+_id | ObjectId
+username | String
+password | String
 
 ## Features
 
