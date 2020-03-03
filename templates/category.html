@@ -10,7 +10,7 @@
 			<p class="top-text">Find all {{category}} exercises here. To add your own please click on the button on the bottom.</p>
 		</div>
 	</div>
-
+    
 	{% for exercise in exercises %}
 
 	<div class="row">
@@ -24,8 +24,23 @@
 						<div class="full-content">
                             <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
                             <div class="vote">
-                                <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
-                                <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-button">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+                                
+                                <!-- Like button, displayed in green if current user has already liked the exercise -->
+
+                                {% if current_user.username in exercise.like|map(attribute="username") %}
+                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons like-button-voted">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+                                {% else %}
+                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+                                {% endif %}
+
+                                <!-- Dislike button, displayed in red if current user has already disliked the exercise -->
+
+                                {% if current_user.username in exercise.dislike|map(attribute="username") %}
+                                    <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons dislike-button-voted">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+                                {% else %}
+                                    <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+                                {% endif %}
+
                             </div>
                             <p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
 						    <p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, url_for, flash, redirect, request, session
+from flask import Flask, render_template, url_for, flash, redirect, request, session, jsonify
 from flask_pymongo import PyMongo
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, ExerciseForm
@@ -21,6 +21,7 @@ mongo = PyMongo(app)
 login = LoginManager(app)
 login.login_view = 'login'
 
+
 # Index/home
 
 @app.route('/')
@@ -30,6 +31,7 @@ def index():
     Home page - landing page
     """
     return render_template('index.html')
+
 
 # Register new account
 
@@ -65,6 +67,7 @@ def register():
 
     return render_template('register.html', title='Register', form=form)
 
+
 # User Loader Function
 
 @login.user_loader
@@ -75,6 +78,7 @@ def load_user(username):
         return None
 
     return User(u['username'])
+
 
 # Login with existing account
 
@@ -114,6 +118,7 @@ def login():
 
     return render_template('login.html', title='Login', form=form)
 
+
 # Logout
 
 @app.route('/logout')
@@ -122,6 +127,7 @@ def logout():
     session.clear()
     flash('You have successfully logged out.', 'normal')
     return redirect(url_for('login'))
+
 
 # Muscle groups
 
@@ -148,6 +154,7 @@ def get_category(category):
     return render_template("category.html",
                            category=category, exercises=exercises)
 
+
 # My exercises
 # Allows user to see all his/her added exercises.
 
@@ -173,6 +180,7 @@ def my_exercises():
                            liked_exercises=liked_exercises,
                            title='My Exercises')
 
+
 # Add Exercise
 
 @app.route('/<category>/add_exercise', methods=['GET', 'POST'])
@@ -184,6 +192,7 @@ def add_exercise(category):
     return render_template('add_exercise.html',
                            user=user, category=category,
                            form=form, title='Add Exercise')
+
 
 # Insert Exercise
 
@@ -225,6 +234,7 @@ def insert_exercise(category):
 
     return redirect(url_for('get_category', category=category))
 
+
 # Edit Exercise
 
 @app.route('/<category>/edit_exercise/<exercise_id>', methods=['GET', 'POST'])
@@ -237,6 +247,7 @@ def edit_exercise(category, exercise_id):
     return render_template('edit_exercise.html',
                            category=category,
                            exercise=the_exercise, form=form)
+
 
 # Update Exercise
 
@@ -257,6 +268,7 @@ def update_exercise(category, exercise_id):
 
     return redirect(url_for('get_category', category=category))
 
+
 # Delete Exercise
 
 @app.route('/delete_exercise/<exercise_id>')
@@ -266,6 +278,7 @@ def delete_exercise(exercise_id):
     mongo.db.exercises.remove({'_id': ObjectId(exercise_id)})
 
     return redirect(url_for('my_exercises'))
+
 
 # Like / Dislike Functionality
 
@@ -285,6 +298,7 @@ def remove_vote(vote_type, vote_type_total, exercise_id, username):
     mongo.db.exercises.update({"_id": ObjectId(exercise_id)}, {'$pull': {vote_type: {'username': username}}})
 
     mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)}, {'$inc': {vote_type_total: -1}})
+
 
 # Like
 # Function that allows liking
@@ -325,6 +339,7 @@ def like(exercise_id):
 
     return redirect(url_for('my_exercises', exercise_id=exercise_id))
 
+
 # Disike
 # Function that allows disliking
 
@@ -351,7 +366,7 @@ def dislike(exercise_id):
 
         remove_vote('dislike', 'dislike_total', exercise_id, username)
 
-    # If user already liked the review then remove his/her like and add dislike                                        
+    # If user already liked the review then remove his/her like and add dislike
     elif match_count_like > 0:
         remove_vote('like', 'like_total', exercise_id, username)
         add_vote('dislike', 'dislike_total', exercise_id, username)
@@ -361,6 +376,7 @@ def dislike(exercise_id):
         add_vote('dislike', 'dislike_total', exercise_id, username)
 
     return redirect(url_for('my_exercises', exercise_id=exercise_id))
+
 
 # Set up of IP address and PORT number
 
