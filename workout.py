@@ -40,7 +40,7 @@ def register():
     """
     Enables user to register a new account.
     """
-    
+
     if current_user.is_authenticated:
 
         flash("You are already logged in.", 'error')
@@ -85,7 +85,8 @@ def load_user(username):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Allows user to login with existing account.
+    Allows user to login with existing account. This view checks
+    if username exists in the database and if the password is correct.
     """
 
     if current_user.is_authenticated:
@@ -123,6 +124,10 @@ def login():
 
 @app.route('/logout')
 def logout():
+    """
+    Enables user to log out.
+    """
+
     logout_user()
     session.clear()
     flash('You have successfully logged out.', 'normal')
@@ -134,8 +139,9 @@ def logout():
 @app.route('/muscle_groups')
 def muscle_groups():
     '''
-    Allows user to view the 4 muscle groups.
+    Allows user to view the four muscle groups.
     '''
+
     return render_template('groups.html')
 
 
@@ -145,14 +151,18 @@ def muscle_groups():
 def get_category(category):
     '''
     This view will take in a category name, and return
-    all of the exercises within that category
+    all of the exercises within that category.
+    The exercises will be sorted with the most liked
+    exercises on the top.
     '''
+
     exercises = mongo.db.exercises.find({
             "category_name": category.title()
         }).sort([("like_total", -1)])
 
     return render_template("category.html",
-                           category=category, exercises=exercises)
+                           category=category,
+                           exercises=exercises)
 
 
 # My exercises
@@ -161,6 +171,11 @@ def get_category(category):
 @app.route('/my_exercises')
 @login_required
 def my_exercises():
+    '''
+    This view will return all of the exercises that
+    a user has liked and added to the database.
+    '''
+
     username = current_user.username
     user = mongo.db.users.find_one({
         'username': username})
@@ -181,11 +196,66 @@ def my_exercises():
                            title='My Exercises')
 
 
+# Delete Account
+
+@app.route('/delete_account/<user_id>')
+@login_required
+def delete_account(user_id):
+    '''
+    This view will take in a user_id to then deduct the total
+    counts of the like and dislike values for the exercises a
+    user voted for, then the username is being removed from the
+    arrays of the like / dislike variables. Additionally all
+    exercises a user has added are removed and finally the user
+    itself is removed from the database.
+    '''
+
+    username = current_user.username
+
+    # first remove vote from total likes/dislikes for all
+    # exercises the user has voted
+    mongo.db.exercises.update_many(
+        {'like': {'username': username}},
+        {'$inc': {'like_total': -1}}
+    )
+
+    mongo.db.exercises.update_many(
+        {'dislike': {'username': username}},
+        {'$inc': {'dislike_total': -1}}
+    )
+
+    # then remove username from all exercises that user has liked/disliked
+    mongo.db.exercises.update_many(
+        {'like': {'username': username}},
+        {'$pull': {'like': {'username': username}}}
+    )
+
+    mongo.db.exercises.update_many(
+        {'dislike': {'username': username}},
+        {'$pull': {'dislike': {'username': username}}}
+    )
+
+    # remove all exercises the user has added
+    mongo.db.exercises.remove({'added_by': username})
+
+    # remove the user
+    mongo.db.users.remove({'_id': ObjectId(user_id)})
+
+    session.clear()
+
+    return redirect(url_for('index'))
+
+
 # Add Exercise
 
 @app.route('/<category>/add_exercise', methods=['GET', 'POST'])
 @login_required
 def add_exercise(category):
+    '''
+    This view will take in a category and renders the exercise
+    form.
+    '''
+
     user = session['username']
     form = ExerciseForm()
 
@@ -199,6 +269,11 @@ def add_exercise(category):
 @app.route('/<category>/insert_exercise', methods=['POST'])
 @login_required
 def insert_exercise(category):
+    '''
+    This view will take in a category and inserts an exercise
+    to the database once the user clicks on the submit button.
+    '''
+
     exercises = mongo.db.exercises
     username = current_user.username
 
@@ -240,6 +315,10 @@ def insert_exercise(category):
 @app.route('/<category>/edit_exercise/<exercise_id>', methods=['GET', 'POST'])
 @login_required
 def edit_exercise(category, exercise_id):
+    '''
+    This view will take in a category and an exercise_id and
+    renders the edit exercise form.
+    '''
 
     the_exercise = mongo.db.exercises.find_one({"_id": ObjectId(exercise_id)})
     form = ExerciseForm()
@@ -251,9 +330,15 @@ def edit_exercise(category, exercise_id):
 
 # Update Exercise
 
-@app.route('/<category>/update_exercise/<exercise_id>', methods=['GET', 'POST'])
+@app.route('/<category>/update_exercise/<exercise_id>', methods=['GET',
+                                                                 'POST'])
 @login_required
 def update_exercise(category, exercise_id):
+    '''
+    This view will take in a category and an exercise_id and
+    updates the information about an exercise, after the user
+    has clicked the submit button in the edit form.
+    '''
 
     exercises = mongo.db.exercises
 
@@ -274,6 +359,10 @@ def update_exercise(category, exercise_id):
 @app.route('/delete_exercise/<exercise_id>')
 @login_required
 def delete_exercise(exercise_id):
+    '''
+    This view will take in an exercise_id and removes
+    the exercise from the database.
+    '''
 
     mongo.db.exercises.remove({'_id': ObjectId(exercise_id)})
 
@@ -283,29 +372,38 @@ def delete_exercise(exercise_id):
 # Like / Dislike Functionality
 
 '''
-Define general functions that will add or remove vote from username list and vote total
-and set variable for keys like/dislike and like_total/dislike_total
+Functionality that will add or remove a vote from username arrays
+and increase the total voted numbers
 '''
 
-def add_vote(vote_type, vote_type_total, exercise_id, username):
-    mongo.db.exercises.update({"_id": ObjectId(exercise_id)}, {'$push': {vote_type: {'username': username}}})
 
-    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)}, {'$inc': {vote_type_total: 1}})
+def add_vote(vote_type, vote_type_total, exercise_id, username):
+    mongo.db.exercises.update({"_id": ObjectId(exercise_id)},
+                              {'$push': {vote_type: {'username': username}}})
+
+    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)},
+                                           {'$inc': {vote_type_total: 1}})
 
 
 def remove_vote(vote_type, vote_type_total, exercise_id, username):
 
-    mongo.db.exercises.update({"_id": ObjectId(exercise_id)}, {'$pull': {vote_type: {'username': username}}})
+    mongo.db.exercises.update({"_id": ObjectId(exercise_id)},
+                              {'$pull': {vote_type: {'username': username}}})
 
-    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)}, {'$inc': {vote_type_total: -1}})
+    mongo.db.exercises.find_one_and_update({'_id': ObjectId(exercise_id)},
+                                           {'$inc': {vote_type_total: -1}})
 
 
 # Like
-# Function that allows liking
 
 @app.route('/like/<exercise_id>', methods=['GET', 'POST'])
 @login_required
 def like(exercise_id):
+    '''
+    This view takes in an exercise_id and and enables users to
+    like an exercise storing the username in the like variable
+    and increasing the like_total number by 1
+    '''
 
     username = current_user.username
 
@@ -341,11 +439,15 @@ def like(exercise_id):
 
 
 # Disike
-# Function that allows disliking
 
 @app.route('/dislike/<exercise_id>', methods=['GET', 'POST'])
 @login_required
 def dislike(exercise_id):
+    '''
+    This view takes in an exercise_id and and enables users to
+    dislike an exercise storing the username in the dislike
+    variable and decreasing the dislike_total number by 1
+    '''
 
     username = current_user.username
 
@@ -366,16 +468,65 @@ def dislike(exercise_id):
 
         remove_vote('dislike', 'dislike_total', exercise_id, username)
 
-    # If user already liked the review then remove his/her like and add dislike
+    # If user already liked the exercise then remove like and add dislike
     elif match_count_like > 0:
         remove_vote('like', 'like_total', exercise_id, username)
         add_vote('dislike', 'dislike_total', exercise_id, username)
 
-    # If user neither liked nor disliked the review add dislike
+    # If user neither liked nor disliked the exercise add dislike
     else:
         add_vote('dislike', 'dislike_total', exercise_id, username)
 
-    return redirect(url_for('my_exercises', exercise_id=exercise_id))
+    return redirect(url_for('muscle_groups', exercise_id=exercise_id))
+
+
+# Search
+# Functionality that enables the user to search for specific exercises
+
+@app.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    '''
+    This view enables the user to search for exercises by name,
+    affected muscles and exercise difficulty.
+    '''
+
+    search_input = request.form.get("search_input")
+    search_string = str(search_input)
+
+    mongo.db.exercises.create_index([('exercise_name', 'text'),
+                                     ('muscles', 'text'),
+                                     ('exercise_difficulty', 'text')])
+
+    # Search results and sort by id
+    search_results = mongo.db.exercises.find(
+        {"$text": {"$search": search_string}}).sort([("_id", -1)])
+
+    results_count = mongo.db.exercises.count_documents(
+        {"$text": {"$search": search_string}})
+
+    if request.method == 'POST':
+
+        # If no search input flash the message
+        if search_string == '':
+
+            flash('You have not provided any search input! Please try again or browse through all exercises.', 'error')
+
+            return redirect('/muscle_groups')
+
+        # If no results display info message
+        elif results_count == 0:
+
+            flash(f'No matching results found for "{search_input}". Please try a different search or browse through all exercises', 'error')
+
+            return redirect('/muscle_groups')
+
+        # Display search result
+        else:
+
+            return render_template('search.html', exercises=search_results)
+
+    return render_template('search.html', exercises=search_results)
 
 
 # Set up of IP address and PORT number
