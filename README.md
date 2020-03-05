@@ -104,7 +104,7 @@ password | String
 
 #### Page Structure
 
-- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to Home, All exercises, My exercises and Logout. If a user has not logged in the links Home, Login and Register are visible.
+- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to 'Home', 'All Exercises', 'My Exercises' and 'Logout'. If a user has not logged in the links 'Home', 'Login' and 'Register' are visible.
 
 - **Footer:** The footer contains the education disclaimer and a GitHub link.
 
@@ -125,6 +125,8 @@ password | String
 - **Add Exercise button:** enables the user to add an exercise to the database.
 
 - **Edit and Delete buttons:** each exercise a user has added when clicking on the edit button the user is able to edit and update the exercises. The delete button enables the user to fully delete the exercise from the database.
+
+- **Delete Account button:** enables the user to delete the account including the exercises the user has added. additionally every like/dislike is removed.
 
 - **Cancel button:** enables the user to cancel when editing an exercise
 
@@ -174,6 +176,32 @@ password | String
 
 ## Testing
 
+### Code Validation
+
+#### HTML
+
+The [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to validate HTML code.
+
+#### CSS
+
+The [W3C Markup Validation Service](https://validator.w3.org/) was used to validate CSS code. It showed two errors and several errors for the Materialize library.
+
+A couple of errors poped up, as e.g. a duplicate " in the class in the navbar. The warning "The type attribute is unnecessary for JavaScript resources." was displayed referencing the script tag. The type="text/javascript" was therefore removed.
+
+No errors nor warnings remained.
+
+#### JavaScript
+
+[JSHint](https://jshint.com/) was used to validate JavaScript. 
+
+#### Python
+
+
+
+### Features testing
+
+### Responsiveness testing
+
 ### User stories testing
 
 #### User story 1
@@ -186,7 +214,7 @@ password | String
 - By clicking on the 'Login' button and filling out the Login form with an existing username and password any user can log in to see all exercises that are available in the database. Without being logged in it is not possible to access the exercises. Having a 'Logout' button in the navbar on the top makes it easy for the user to log out once he / she is done.
 
 #### User story 4
-- With the 'All Exercises' button in the navbar users are able to access the exercises.
+- With the 'All Exercises' button in the navbar users are able to access the exercises. The 'All Exercises' page loads a bit slower even though the image sizes were reduced.
 
 #### User story 5
 - Exercises are categorized in four different categories. By clicking on one of the four muscle groups the user is able to then see exercises specific to that muscle group. 
@@ -204,7 +232,7 @@ password | String
 - Users are only able to edit / delete their own exercises. They are not able to edit or delete exercises that were added by others. They are however able to see who has added the exercise to the database.
 
 #### User story 10
-- Users can like or dislike each of the exercises by clicking the thumbs up / thumbs down button, which are located under the exercise names. When having liked an exercise the thumbs up button will be displayed in green. After disliking an exercise the thumbs down button will be shown in red.
+- Users can like or dislike each of the exercises by clicking the thumbs up / thumbs down button, which are located under the exercise names. When having liked an exercise the thumbs up button will be displayed in green. After disliking an exercise the thumbs down button will be shown in red. After liking an exercise the user is redirected to the 'My Exercises' page, where he / she is able to see all liked exercises in one place. After having clicked the dislike button the users are then redirected to the 'All Exercises' page, where they are able to look for other exercises to like.
 
 #### User story 11
 - After having liked / disliked an exercise and the user changes his / her mind by clicking on the highlighted like / dislike button it is possible to remove the like or dislike vote for the specific exercise.
