@@ -6,27 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css"/>
+    <link rel="icon" href="/static/img/logo.png">
     <title>Find Your Workout</title>
 </head>
 <body>
     <header>
-        <ul class="side-nav" id="mobile-demo">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
-            <li><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% else %}
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
-        </ul>
+
+        <!--Nav Bar-->
         
-        <div class="navbar">
+        <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="{{ url_for('index') }}" class="brand-logo"><img class="workout-logo"" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
+                    <a href="{{ url_for('index') }}" class="brand-logo"><img class="workout-logo" src="/static/img/logo.png" alt="workout-logo" height="20px" width="22px">Find Your Workout</a>
+                    <!-- Side Nav Menu Button -->
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li {%- if request.path == url_for('index') %} class="active"{% endif %}><a href="{{ url_for('index') }}">Home</a></li>
@@ -42,7 +35,22 @@
                 </div>
             </nav>
         </div>
+
+        <!-- Side Nav Menu -->
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
+            <li><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
     </header>
+    
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -50,46 +58,22 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+
+    <!-- Main Content -->
     <main>
         {% block content %}
         {% endblock %}
     </main>
+
+    <!-- Footer -->
     <footer class="page-footer">
         <div class="container">
-            This website was created for educational purposes only.
+            This website was created for educational purposes only.
             <a class="grey-text text-lighten-4 right" href="https://github.com/alnibo/milestone-project-3-workout" target="_blank">Github</a>
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".button-collapse").sideNav();
-            $(".dropdown-trigger").dropdown();
-        });
-
-        if ($('#back-to-top').length) {
-            var scrollTrigger = 100, // px
-                backToTop = function() {
-                    var scrollTop = $(window).scrollTop();
-                    if (scrollTop > scrollTrigger) {
-                        $('#back-to-top').removeClass('scale-out');
-                    } else {
-                    $('#back-to-top').addClass('scale-out');
-                    }
-                };
-            backToTop();
-            $(window).on('scroll', function() {
-                backToTop();
-            });
-            
-            $('#back-to-top').on('click', function(e) {
-                e.preventDefault();
-                $('html,body').animate({
-                scrollTop: 0
-                }, 700);
-            });
-        }
-    </script>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>
 </html>

@@ -2,120 +2,156 @@
 {% block content %}
 
 <section class="groups-container">
+
+    <!-- Top header -->
 	<div class="">
 		<div class="row">
 			<h1>{{ user.username[0]|upper}}{{user.username[1:] }}'s Exercises</h1>
 		</div>
+
+        <!-- Delete account button -->
 		<div class="row">
-			<p class="top-text">Here you can find all exercises that you have liked and <a href="#added_exercises">further down</a> all the ones that you have added to this website.</p>
+			<button id="delete-button" class="waves-effect waves-light btn other-btn">Delete Account</button>
+		</div>
+
+		<!-- Delete modal to confirm the deletion of the account -->
+		<div id="delete-modal" class="delete-window">
+			<div class="delete-box">
+				<h3 class="delete-header">Are you sure?</h3>
+				<p>You won't be able to revert this!</p>
+				<span class="col s12 del-acc"><a class="waves-effect waves-light btn delete-btn" href="{{url_for('delete_account', user_id=user._id)}}">Delete Account</a></span>
+                <span class="col s6"><a class="waves-effect waves-light btn delete-btn delete-close" href="">Cancel</a></span>
+			</div>
+		</div>
+
+		<div class="row">
+			<p class="top-text">Here you can find all exercises that you have liked and <a
+					href="#added_exercises">further down</a> all the ones that you have added to this website.</p>
 		</div>
 	</div>
-    
-    <div class="divider"></div>
 
-    <div class="row">
-        <h2>Liked Exercises</h2>
-    </div>
+	<div class="divider"></div>
 
-    {% for exercise in liked_exercises %}
-    
+	<!-- Liked Exercises -->
+	<div class="row">
+		<h2>Liked Exercises</h2>
+	</div>
+
+	{% for exercise in liked_exercises %}
+
 	<div class="row">
 		<div class="col s12">
 			<div class="card sticky-action horizontal">
-                <a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only" href="{{ url_for('get_category', category=exercise.category_name) }}">
-                    <h3 class="header">{{exercise.category_name.title()}} exercise</h3>
-                </a>
+
+                <!-- Image corresponding to the muscle group -->
+				<a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only"
+					href="{{ url_for('get_category', category=exercise.category_name) }}">
+					<h3 class="header">{{exercise.category_name.title()}} exercise</h3>
+				</a>
+
+                <!-- Card content -->
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
-                            <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
-                            <div class="vote">
+							<h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+							<div class="vote">
 
-                                <!-- Like button, displayed in green if current user has already liked the exercise -->
+								<!-- Like button, displayed in green if current user has already liked the exercise -->
+								{% if user.username in exercise.like|map(attribute="username") %}
+								<span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons like-button-voted">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+								{% else %}
+								<span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+								{% endif %}
 
-                                {% if user.username in exercise.like|map(attribute="username") %}
-                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons like-button-voted">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
-                                {% else %}
-                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
-                                {% endif %}
-                                
-                                <!-- Dislike button -->
+								<!-- Dislike button -->
+								<span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
 
-                                <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
-
-                            </div>
-                            <p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
-						    <p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
-						    <p><strong>Equipment: </strong>{{exercise.equipment}}</p>
-						    <p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
-                        </div>
-                    </div>
+							</div>
+							<p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
+							<p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
+							<p><strong>Equipment: </strong>{{exercise.equipment}}</p>
+							<p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
+						</div>
+					</div>
 					<div class="card-action">
-					    {% if current_user.username == exercise.added_by %}
+
+                        <!-- Edit and Delete buttons if current user has added this exercise -->
+						{% if current_user.username == exercise.added_by %}
 						<span class="left-button"><a href="{{url_for('edit_exercise', category=exercise.category_name, exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Edit</a></span>
 						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
-                        {% else %}
-                        <p>This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
-                        {% endif %}
+						{% else %}
+
+                        <!-- Otherwise information on who added the exercise -->
+						<p class="text-added">This exercise was added by {{ exercise.added_by[0]|upper }}{{ exercise.added_by[1:] }}.</p>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-    {% else %}
+	{% else %}
 
-    <div class="row">
-		<p class="top-text">You haven't liked any exercises yet. Go to <a href="{{ url_for('muscle_groups') }}">All Exercises</a> to get inspiration!</p>
+    <!-- Information if user hasn't liked any exercises yet -->
+	<div class="row">
+		<p class="top-text">You haven't liked any exercises yet. Go to <a href="{{ url_for('muscle_groups') }}">All
+				Exercises</a> to get inspiration!</p>
 	</div>
 
 	{% endfor %}
 
-    <div id="added_exercises" class="divider"></div>
+	<div id="added_exercises" class="divider"></div>
 
-    <div class="row">
-        <h2>Added Exercises</h2>
-    </div>
+	<!-- Added Exercises -->
+
+	<div class="row">
+		<h2>Added Exercises</h2>
+	</div>
 
 	{% for exercise in added_exercises %}
 
 	<div class="row">
 		<div class="col s12">
+
+            <!-- Image corresponding to the muscle group -->
 			<div class="card sticky-action horizontal">
-                <a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only" href="{{ url_for('get_category', category=exercise.category_name) }}">
-                    <h3 class="header">{{exercise.category_name.title()}} exercise</h3>
-                </a>
+				<a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only"
+					href="{{ url_for('get_category', category=exercise.category_name) }}">
+					<h3 class="header">{{exercise.category_name.title()}} exercise</h3>
+				</a>
+
+                <!-- Card content -->
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
-                            <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
-                            <div class="vote">
+							<h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+							<div class="vote">
 
-                                <!-- Like button, displayed in green if current user has already liked the exercise -->
+								<!-- Like button, displayed in green if current user has already liked the exercise -->
+								{% if user.username in exercise.like|map(attribute="username") %}
+								<span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons like-button-voted">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+								{% else %}
+								<span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
+								{% endif %}
 
-                                {% if user.username in exercise.like|map(attribute="username") %}
-                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons like-button-voted">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
-                                {% else %}
-                                    <span class="col s6 right-align"><a href="{{ url_for('like', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_up</i></a><span class="total-count">{{exercise.like_total}}</span></span>
-                                {% endif %}
+								<!-- Dislike button, displayed in red if current user has already disliked the exercise -->
+								{% if user.username in exercise.dislike|map(attribute="username") %}
+								<span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons dislike-button-voted">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+								{% else %}
+								<span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
+								{% endif %}
 
-                                <!-- Dislike button, displayed in red if current user has already disliked the exercise -->
+							</div>
+							<p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
+							<p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
+							<p><strong>Equipment: </strong>{{exercise.equipment}}</p>
+							<p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
+						</div>
+					</div>
 
-                                {% if user.username in exercise.dislike|map(attribute="username") %}
-                                    <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons dislike-button-voted">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
-                                {% else %}
-                                    <span class="col s6 left-align"><a href="{{ url_for('dislike', exercise_id=exercise._id) }}"><i class="material-icons vote-buttons">thumb_down</i></a><span class="total-count">{{exercise.dislike_total}}</span></span>
-                                {% endif %}
-
-                            </div>
-                            <p><strong>Affected Muscles: </strong>{{exercise.muscles}}</p>
-						    <p><strong>Exercise Difficulty: </strong>{{exercise.exercise_difficulty}}</p>
-						    <p><strong>Equipment: </strong>{{exercise.equipment}}</p>
-						    <p class="instructions"><strong>Exercise instructions: </strong>{{exercise.exercise_instructions}}</p>
-                        </div>
-                    </div>
+                    <!-- Edit and Delete buttons -->
 					<div class="card-action">
-					    <span class="left-button"><a href="{{url_for('edit_exercise', category=exercise.category_name, exercise_id=exercise._id)}}" class="waves-effect waves-light btn  other-btn exercise-button">Edit</a></span>
+						<span class="left-button"><a href="{{url_for('edit_exercise', category=exercise.category_name, exercise_id=exercise._id)}}" class="waves-effect waves-light btn  other-btn exercise-button">Edit</a></span>
 						<span><a href="{{url_for('delete_exercise', exercise_id=exercise._id)}}" class="waves-effect waves-light btn other-btn exercise-button">Delete</a></span>
 					</div>
 				</div>
@@ -123,26 +159,30 @@
 		</div>
 	</div>
 
-    {% else %}
+	{% else %}
 
-    <div class="row">
-		<p class="top-text">You haven't added any exercises yet. Click on the button below to add your own exercises!</p>
+    <!-- Information if user hasn't liked any exercises yet -->
+	<div class="row">
+		<p class="top-text">You haven't added any exercises yet. Click on the button below to add your own exercises!
+		</p>
 	</div>
 
 	{% endfor %}
 
-    <div class="row">
+    <!-- Add a new exercise button -->
+	<div class="row">
 		<div class="col s12 center-align">
-            <a href="{{ url_for('add_exercise', category='my_exercises') }}" class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
-        </div>
+			<a href="{{ url_for('add_exercise', category='my_exercises') }}"
+				class="waves-effect waves-light btn other-btn">Add A New Exercise</a>
+		</div>
 	</div>
 
-    <!-- Back to top -->
-    <div class="fixed-action-btn">
-      <a id="back-to-top" class="btn-floating btn-large black scale-transition">
-        <i class="large material-icons">keyboard_arrow_up</i>
-      </a>
-    </div>
+	<!-- Back to top button -->
+	<div class="fixed-action-btn">
+		<a id="back-to-top" class="btn-floating btn-large black scale-transition">
+			<i class="large material-icons">keyboard_arrow_up</i>
+		</a>
+	</div>
 
 </section>
 
