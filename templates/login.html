@@ -20,6 +20,13 @@
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">account_circle</i>{{ form.username.label }}<br>{{ form.username(size=32) }}
+                            {% if form.username.errors %}
+                                <ul class="errors">
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
 						</div>
 					</div>
 
@@ -27,6 +34,13 @@
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">lock</i>{{ form.password.label }}<br>{{ form.password(size=32) }}
+                            {% if form.password.errors %}
+                                <ul class="errors">
+                                    {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
 						</div>
 					</div>
 

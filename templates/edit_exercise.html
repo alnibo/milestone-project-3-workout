@@ -2,14 +2,14 @@
 {% block content %}
 <section class="background-container">
 	<div class="row">
-		<div class="login-reg-box col s8 offset-s2">
+		<div class="login-reg-box col s10 offset-s1 m8 offset-m2">
 
             <!-- Header -->
 			<div class="row">
 				<h2>Edit your exercise</h2>
 			</div>
 			<div class="row center-align">
-				<span class="col s10 offset-s1">Please make the necessary changes in the corresponding fields below and then click on Save Changes.</span>
+				<span class="col s10 offset-s1 hide-on-small-only">Please make the necessary changes in the corresponding fields below and then click on Save Changes.</span>
 			</div>
 
 			<div class="row">
@@ -21,7 +21,7 @@
                         <!-- Select input field for muscle group -->
                         <div class="input-field col s12">
                             <i class="material-icons prefix">dashboard</i>
-                            <select name="category_name">
+                            <select name="category_name" required>
                                 <option value="" disabled selected>Choose Muscle Group</option>
                                 {% for cat in categories %}
                                     {% if cat == exercise.category_name %}
@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">network_check</i>
-                            <select name="exercise_difficulty">
+                            <select name="exercise_difficulty" required>
                                 <option value="" disabled selected>Choose level of difficulty</option>
                                 {% for dif in difficulties %}
                                     {% if dif == exercise.exercise_difficulty %}

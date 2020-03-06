@@ -112,7 +112,7 @@ h3 {
 
 .home-text {
     text-align: center;
-    width: 60%;
+    width: 94%;
     margin: auto;
     padding: 20px;
 }
@@ -162,16 +162,13 @@ h3 {
 }
 
 .groups-box {
-    height: 600px;
+    height: 300px;
     overflow: hidden;
     position: relative;
     text-align: center;
     color: white;
-    padding: 10px !important;
-}
-
-.groups-box {
     opacity: 0.9;
+    padding: 10px !important;
 }
 
 .group-bucket:hover > .groups-box {
@@ -311,7 +308,7 @@ h3 {
 
 .top-text {
     background-color: rgba(0,0,0,0.5);
-    width: 60%;
+    width: 94%;
     margin: auto;
     padding: 20px;
 }
@@ -345,7 +342,7 @@ li.disabled span {
 
 /* ************************************************** Media Queries */
 
-@media (min-width:330px) {
+@media (min-width:370px) {
     h1 {
         font-size: 4rem;
     }
@@ -354,6 +351,12 @@ li.disabled span {
     }
     .workout-logo {
         display: inline;
+    }
+    .top-text {
+        width: 60%;
+    }
+    .home-text {
+        width: 60%;
     }
 }
 
@@ -372,5 +375,11 @@ li.disabled span {
 @media (min-width:683px) {
     .left-button {
          margin-right: 20px;
+    }
+}
+
+@media (min-width:1200px) {
+    .groups-box {
+        height: 500px;
     }
 }

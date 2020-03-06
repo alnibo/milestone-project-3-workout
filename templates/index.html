@@ -11,17 +11,6 @@
                         <p class="home-text">Get inspiration for effective workouts and share your favorite exercises with others.</p>
                     </div>
 
-                    <!-- Search bar -->
-                    <div class="nav-wrapper">
-                    <form action="{{ url_for('search') }}" method="POST" class="col s12">
-                        <div class="input-field">
-                            <input id="search_input" type="search" class="search-box" required>
-                            <label class="label-icon" for="search_input"><i class="material-icons">search</i></label>
-                            <i class="material-icons close-button">close</i>
-                        </div>
-                    </form>
-                    </div>
-
                     <!-- Buttons for logged in users -->
                     {% if current_user.is_authenticated %}
                     <div class="row">
