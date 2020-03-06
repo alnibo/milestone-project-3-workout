@@ -1,3 +1,4 @@
+from workout import app
 from flask import Flask
 from flask_testing import TestCase
 import unittest
@@ -9,7 +10,119 @@ class MyTest(TestCase):
 
         app = Flask(__name__)
         app.config['TESTING'] = True
+        app.config['MONGO_URI'] = 'mongodb://'
         return app
+
+    def setUp(self):
+        self.client = app.test_client()
+        pass
+
+    def tearDown(self):
+        pass
+
+    # Tests if pages load correctly - user not authenticated
+
+    def test_loading_index(self):
+        response = self.client.get('/', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('index.html')
+
+    def test_loading_register(self):
+        response = self.client.get('/register', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('register.html')
+
+    def test_loading_login(self):
+        response = self.client.get('/login', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('login.html')
+
+    def test_loading_logout(self):
+        response = self.client.get('/logout', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('login.html')
+
+    def test_loading_groups(self):
+        response = self.client.get('/muscle_groups', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('login.html')
+
+    def test_loading_category(self):
+        response = self.client.get('/<category>', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('login.html')
+
+    def test_loading_my_exercises(self):
+        response = self.client.get('/my_exercises', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('login.html')
+
+    # Test Registration Form
+
+    def test_username_too_short(self):
+        """
+        Test if error message gets displayed
+        when username provided by user is too short
+        """
+        response = self.client.post('/register',
+                                    data=dict(username='ab',
+                                              password='abcde',
+                                              password2='abcde',
+                                              ))
+        data = response.data.decode('utf-8')
+        assert 'Field must be between 3 and 25 characters long' in data
+
+    def test_password_too_short(self):
+        """
+        Test if error message gets displayed
+        when password provided by user is too short
+        """
+        response = self.client.post('/register',
+                                    data=dict(username='abcde',
+                                              password='abc',
+                                              password2='abc',
+                                              ))
+        data = response.data.decode('utf-8')
+        assert 'Field must be between 5 and 50 characters long' in data
+
+    def test_password_repeated(self):
+        """
+        Test if error message gets displayed
+        when password is repeated incorrectly
+        """
+        response = self.client.post('/register',
+                                    data=dict(username='abcde',
+                                              password='abc',
+                                              password2='xyz',
+                                              ))
+        data = response.data.decode('utf-8')
+        assert 'Field must be equal to password' in data
+
+    # Test Login Form
+
+    def test_no_username(self):
+        """
+        Test if error message gets displayed
+        when no username is provided by user at login
+        """
+        response = self.client.post('/login',
+                                    data=dict(username='',
+                                              password='abcde'
+                                              ))
+        data = response.data.decode('utf-8')
+        assert 'Please enter a valid username' in data
+
+    def test_no_password(self):
+        """
+        Test if error message gets displayed
+        when no password is provided by user at login
+        """
+        response = self.client.post('/login',
+                                    data=dict(username='abcde',
+                                              password=''
+                                              ))
+        data = response.data.decode('utf-8')
+        assert 'Please enter your password' in data
 
 
 if __name__ == '__main__':
