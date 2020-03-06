@@ -2,32 +2,34 @@
 
 Stream Three Project - Data Centric Development Milestone - Code Institute
 
+![Image of Find Your Workout Home Page](https://github.com/alnibo/milestone-project-3-workout/blob/master/static/img/findyourworkout.jpg)
+
 This website will help you get inspiration and ideas for your next workout. You will find different kinds of exercises for each muscle group and will also have to possibility to add your own exercises to the database to share with others.
 
 ## Table of Contents
 
-1. [Demo](#demo)
-2. [UX](#ux)
-3. [Database](#database)
-4. [Features](#features)
-5. [Technologies Used](#technologies-used)
-6. [Testing](#testing)
-7. [Deployment](#deployment)
-8. [Credits](#credits)
+1. [Demo](#1.-demo)
+2. [UX](#2.-ux)
+3. [Database](#3.-database)
+4. [Features](#4.-features)
+5. [Technologies Used](#5.-technologies-used)
+6. [Testing](#6.-testing)
+7. [Deployment](#7.-deployment)
+8. [Credits](#8.-credits)
 
-## Demo
+## 1. Demo
 
 Check out the deployed website [here](https://find-your-workout.herokuapp.com/).
 
-## UX
+## 2. UX
 
 To create a sleek look and a homogeneous experience for the user I used the colors black, white and grey consistently throughout the project.
 
-In order to create a easy and intuitive user experience I designed the website in a way where it is simple for the user to use.
+In order to create an easy and intuitive user experience I designed the website in a way where it is simple for the user to use.
 
 ### Target Audience
 
-The website targets anyone who is interested in finding out more about not only what exercises to do in order to stay fit but also how to do them and what equipment is needed. More than that, this application also enables users to create own exercises and like existing exercises in order to build up a user page with liked and added exercises.
+The website targets anyone who is interested in finding out more about not only what exercises to do in order to stay fit but also how to do them and what equipment is needed. More than that, this application also enables users to create own exercises and like existing exercises in order to build up their own user page with liked and added exercises.
 
 Therefore this application enables the user to read, add, edit and rate exercises.
 
@@ -35,7 +37,7 @@ Therefore this application enables the user to read, add, edit and rate exercise
 
 As a user I expect/would like/need:
 
-1. to create an account in order to acces the existing exercises.
+1. to create an account in order to access the existing exercises.
 
 2. to delete my account if I don't see the need in having it anymore.
 
@@ -65,13 +67,13 @@ As a user I expect/would like/need:
 
 In the planing process using [Balsamiq](https://balsamiq.cloud/) following [wireframes](https://github.com/alnibo/milestone-project-3-workout/tree/master/wireframes) were created in order to design the layout for this project for mobile, medium and desktop views.
 
-## Database
+## 3. Database
 
 I used the document-based cloud database [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for this project.
 
 My database called workouts consists of the following two collections: exercises, users.
 
-Exercise collection holds all the information for each of the exercises and user collection holds the login information of each registered user.
+The exercise collection holds all the information for each of the exercises and the user collection holds the login information of each registered user. 
 
 ### Exercise collection
 
@@ -98,19 +100,19 @@ _id | ObjectId
 username | String
 password | String
 
-## Features
+## 4. Features
 
 ### Existing Features
 
 #### Page Structure
 
-- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to 'Home', 'All Exercises', 'My Exercises' and 'Logout'. When clicking the 'All Exercises' button a dropdown menu appears in which the user can directly choose one of the four muscle groups. If a user has not logged in the links 'Home', 'Login' and 'Register' are visible.
+- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to 'Home', 'All Exercises', 'My Exercises' and 'Logout'. When clicking the 'All Exercises' button a dropdown menu appears in which the user can directly choose one of the four muscle groups. If a user is not logged in only the links 'Home', 'Login' and 'Register' are visible.
 
 - **Footer:** The footer contains the education disclaimer and a GitHub link.
 
 #### Forms
 
-- **Register form:** the flask register form enables users to create an account in order to use the app. The input fields are username and password (password needs to be repeated to confirm it).
+- **Register form:** the flask register form enables users to create an account in order to use the app. The input fields are username and two password fields (the password needs to be repeated to confirm it).
 
 - **Login form:** the flask login form enables existing users to login and use the website.
 
@@ -120,31 +122,33 @@ password | String
 
 #### Buttons
 
-- **Like and Dislike buttons:** enables users to like and dislike exercises. Liked exercises are then displayed in the user's My Exercises page. In the individual muscle group pages the exercises are sorted by likes, displaying the most liked exercises on the top.
+- **Like and Dislike buttons:** enable users to like and dislike exercises. Liked exercises are then displayed in the user's 'My Exercises' page. In the individual muscle group pages the exercises are sorted by likes, displaying the most liked exercises on the top.
 
 - **Add Exercise button:** enables the user to add an exercise to the database.
 
-- **Edit and Delete buttons:** each exercise a user has added when clicking on the edit button the user is able to edit and update the exercises. The delete button enables the user to fully delete the exercise from the database.
+- **Edit and Delete buttons:** for each exercise a user has added when clicking on the edit button the user is able to edit and update the exercises. The delete button enables the user to fully delete the exercise from the database.
 
-- **Delete Account button:** enables the user to delete the account including the exercises the user has added. additionally every like/dislike is removed.
+- **Delete Account button:** enables the user to delete the account. Additionally all exercises the user has added and every like and dislike is removed from the database.
 
-- **Cancel button:** enables the user to cancel when editing an exercise
+- **Cancel button:** enables the user to cancel when adding or editing an exercise
 
 - **Back to top button:** enables the user to jump back to the top. This feature is escpecially helpful when many exercises will have been added.
 
 #### Other
 
-- **Materialize cards:** the exercises are displayed using Materialize cards feature.
+- **Materialize cards:** the exercises are displayed using the Materialize cards feature.
 
 - **Delete modal:** pop up window that asks the user if really sure before deleting the user account.
 
 ### Features Left to Implement
 
+- Search feature in order to search for e.g. just easy exercises
+
 - Functionality of liking/disliking an exercise and staying on the same page.
 
 - Feature to reset password, if user has forgotten password
 
-## Technologies Used
+## 5. Technologies Used
 
 1. HTML - this standard markup language was used for the structure and layout of this website
 
@@ -174,13 +178,17 @@ password | String
 
 14. [Balsamiq](https://balsamiq.cloud/) - this web-based mockup tool was used to visualize the layout and design of the website
 
-## Testing
+## 6. Testing
 
 ### Code Validation
 
 #### HTML
 
 The [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) was used to validate HTML code.
+
+Two errors and several warnings were shown. But these were regarding Materialize and were disregarded. 
+
+Otherwise no errors nor warnings were shown.
 
 #### CSS
 
@@ -192,17 +200,25 @@ No errors nor warnings remained.
 
 #### JavaScript
 
-[JSHint](https://jshint.com/) was used to validate JavaScript. 
+[JSHint](https://jshint.com/) was used to validate JavaScript.
+
+The validator revealed that there is one undefined variable `$`. This warning was ignored as I think JSHint does not have access to external libraries, such as jQuery.
+
+No other warnings were shown.
 
 #### Python
 
+The [workout_tests.py](https://github.com/alnibo/milestone-project-3-workout/blob/master/workout_tests.py) file was created to test the python code. Tests were run to test if pages were rendering correctly, if the errors for the registration and login form appear and if the login functionallity works.
 
+All other functionalites were manually tested.
 
 ### Features testing
 
+Throughout the development of this website all features were manually tested. The following table gives an overview of how the features were tested and lists resolved and remaining bugs.
+
 | Page | Feature | Tests | Bugs |
 | :---: | :---: | --- | --- |
-| Base/general | Navbar | - test if navbar shows 'Home', 'Login' and 'Register' buttons when user is not authenticated <br> - test if navbar shows 'Home', 'All Exercises', 'My exErcises' and 'Logout' buttons <br> - test if all navbar buttons redirect to the correct page <br> - test if dropdown button works, when clicking once the dropdown options should appear, when pressing on it again it should redirect to the muscle group page and when pressing anywhere else the options should hide again <br> - test if buttons corresponding to the current page are highlighted <br>  - test if navbar collapses on smaller devices and if sideNav works | - SideNav was not clickable, I then moved the code outside the navbar-fixed div and then it worked. <br> - dropdown menu didn't work. resolved through using correct code for the corresponding Materialize version |
+| Base/general | Navbar | - test if navbar shows 'Home', 'Login' and 'Register' buttons when user is not authenticated <br> - test if navbar shows 'Home', 'All Exercises', 'My exErcises' and 'Logout' buttons <br> - test if all navbar buttons redirect to the correct page <br> - test if dropdown button works, when clicking once the dropdown options should appear, when pressing on it again it should redirect to the muscle group page and when pressing anywhere else the options should hide again <br> - test if buttons corresponding to the current page are highlighted <br>  - test if navbar collapses on smaller devices and if sideNav works | - Initially dropdown menu and sideNav menue didn't work - resolved through using correct code for the corresponding Materialize version <br> - sideNav menue was not clickable, resolved by moving the SideNav code outside the navbar-fixed div. |
 | | Footer | - test if GitHub link works and redirects user to the GitHub repository when clicking the button <br> - test if page opens in a new tab | No bugs |
 | | Back to Top Button | - test if button appears when scrolling down <br> - test when clicking if page gets scrolled back to the top | No bugs |
 | Index | Register Button | - test if button redirects to the register form <br> - test if button is visible when user not authenticated <br> - test if button is not visible when user is authenticated | No bugs |
@@ -239,13 +255,15 @@ No errors nor warnings remained.
 
 ### Responsiveness testing
 
+Ensuring its responsiveness this website was tested across different mobile, tablet and desktop devices using Chrome developer tools. In a second step it was then tested across the most common internet browsers (Safari, Chrome, Internet Explorer, and Firefox), making sure it is compatible. For a detailed overview, please see this excel file [here](https://github.com/alnibo/milestone-project-3-workout/blob/master/Testing-resp-comp.pdf).
+
 ### User stories testing
 
 #### User story 1
 - Each user can create their own account by clicking on 'Register' and filling out the register form. In order to register the user needs to input a new username that has not been used yet and enter a password, which needs to be repeated to confirm. Once registered the user is redirected to the login page, where he / she can log in.
 
 #### User story 2
-- On the 'My Exercises' page the user is able to delete the user account by clicking the 'Delete Account' button and confirming in the pop up window. With doing this all added exercises and votes are removed as well.
+- On the 'My Exercises' page the user is able to delete the user account by clicking the 'Delete Account' button and confirming it in the pop up window. With doing this all added exercises and votes are removed from the database.
 
 #### User story 3
 - By clicking on the 'Login' button and filling out the Login form with an existing username and password any user can log in to see all exercises that are available in the database. Without being logged in it is not possible to access the exercises. Having a 'Logout' button in the navbar on the top makes it easy for the user to log out once he / she is done.
@@ -280,7 +298,7 @@ No errors nor warnings remained.
 #### User story 13
 - On each of the individual muscle group pages the exercises are sorted by likes. That means the exercises that have collected the most likes are displayed ot the top showing the user which exercises are favorized by the community.
 
-## Deployment
+## 7. Deployment
 
 ### GitHub
 
@@ -303,8 +321,15 @@ Following steps were taken to deploy my project:
 1. Create app
 
     - On the Heroku website I created a new app.
-    - Under the 'Settings' tab I clicked the 'Reveal Config Vars' where I set the IP to 0.0.0.0 and the PORT to 5000.
-    - Finally I added the MongoDB database configuration, in particular 'MONGO_DBNAME', 'MONGO_URI' and 'SECRET_KEY'
+    - In the heroku dashboard of my application under the 'Settings' tab I clicked on 'Reveal Config Vars', where I then set the following config vars: 
+    
+    key | value 
+    --- | ---
+    IP | 0.0.0.0
+    MONGO_DBNAME | `<database_name>`
+    MONGO_URI | `mongodb+srv://MongUser:<password>>@myfirstcluster-mqzsr.mongodb.net/<database_name>?retryWrites=true&w=majority`
+    PORT | 5000
+    SECRET_KEY | `<secret_key>`
 
 2. Login to the Heroku account in Gitpod
 
@@ -338,7 +363,33 @@ Following steps were taken to deploy my project:
     - Similary to GitHub, changes were added and committed
     - With `$ git push heroku master` the committed code was pushed to Heroku.
 
-## Credits
+### Instructions on how to run this project locally
+
+1. Make sure you have an IDE and the following must be installed:
+  - [PIP](https://pip.pypa.io/en/stable/installing/#upgrading-pip) (will be already installed if you are using Python 3.4 or above)
+  - [Python 3](https://www.python.org/downloads/)
+  - [Git](https://www.atlassian.com/git/tutorials/install-git)
+  - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+2. Go to https://github.com/alnibo/milestone-project-3-workout. There you can either download a copy of the repository by clicking on "Download ZIP" on the top right of the page or if you have Git installed you can clone the repository with the following command:
+
+```
+git clone https://github.com/alnibo/milestone-project-3-workout.git
+```
+
+3. In your local IDE you need to create two files, one called `env.py` and the other one `.gitignore`
+
+4. Your `env.py` file should contain a SECRET_KEY, MONGO_URI, and MONGO_DBNAME to create a link to your Mongo database. The database should be called `workout` with the collections `users` and `exercises`.
+
+5. Make sure that your `.gitignore` file contains `env.py` so that your environment variables won't get pushed to your remote repository.
+
+6. Then run the following command and open port in preview or in a new browser tab:
+
+```
+python3 workout.py
+```
+
+## 8. Credits
 
 ### Content
 
@@ -346,7 +397,7 @@ Information about exercises was taken from the workout app [Bodyweight Training]
 
 ### Media
 
-The pictures where taken from the online image libraries [Pexels](https://www.pexels.com) and [Unsplash](https://unsplash.com).
+The pictures were taken from the online image libraries [Pexels](https://www.pexels.com) and [Unsplash](https://unsplash.com).
 
 ### Acknowledgements
 
@@ -363,3 +414,5 @@ Information about Flask WTF was acquired from [here](https://hackersandslackers.
 The information from [this stackoverflow example](https://stackoverflow.com/questions/52226293/jinja2-check-if-value-exists-in-list-of-dictionaries/52229128) was used to check if the username of the current user is in the exercise like variable.
 
 The delete modal was built with this template [How to create a Modal Box](https://www.w3schools.com/howto/howto_css_modals.asp).
+
+[This Flask Testing documentation](https://pythonhosted.org/Flask-Testing/) and [this project](https://github.com/JBroks/booksy-reviews) provided guidance and laid the ground work when testing my Python code.
