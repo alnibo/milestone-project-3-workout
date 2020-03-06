@@ -1,5 +1,4 @@
 from workout import app
-from flask import Flask
 from flask_testing import TestCase
 from user import User
 from flask_login import current_user, LoginManager, login_user

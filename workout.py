@@ -1,9 +1,9 @@
 import os
-from flask import Flask, render_template, url_for, flash, redirect, request, session, jsonify
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_pymongo import PyMongo
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from user import User
 from bson.objectid import ObjectId
 from os import path
@@ -137,6 +137,7 @@ def logout():
 # Muscle groups
 
 @app.route('/muscle_groups')
+@login_required
 def muscle_groups():
     '''
     Allows user to view the four muscle groups.
@@ -148,6 +149,7 @@ def muscle_groups():
 # Categories
 
 @app.route('/<category>')
+@login_required
 def get_category(category):
     '''
     This view will take in a category name, and return
@@ -327,7 +329,7 @@ def edit_exercise(category, exercise_id):
 
     return render_template('edit_exercise.html',
                            category=category,
-                           exercise=the_exercise, 
+                           exercise=the_exercise,
                            categories=categories,
                            difficulties=difficulties)
 
@@ -428,7 +430,8 @@ def like(exercise_id):
 
         remove_vote('like', 'like_total', exercise_id, username)
 
-    # If user already disliked the exercise then remove his/her dislike and add like
+    # If user already disliked the exercise then remove his/her dislike
+    # and add like
     elif match_count_dislike > 0:
 
         add_vote('like', 'like_total', exercise_id, username)
@@ -484,58 +487,9 @@ def dislike(exercise_id):
     return redirect(url_for('muscle_groups', exercise_id=exercise_id))
 
 
-# Search
-# Functionality that enables the user to search for specific exercises
-
-@app.route('/search', methods=['GET', 'POST'])
-@login_required
-def search():
-    '''
-    This view enables the user to search for exercises by name,
-    affected muscles and exercise difficulty.
-    '''
-
-    search_input = request.form.get("search_input")
-    search_string = str(search_input)
-
-    mongo.db.exercises.create_index([('exercise_name', 'text'),
-                                     ('muscles', 'text'),
-                                     ('exercise_difficulty', 'text')])
-
-    # Search results and sort by id
-    search_results = mongo.db.exercises.find(
-        {"$text": {"$search": search_string}}).sort([("_id", -1)])
-
-    results_count = mongo.db.exercises.count_documents(
-        {"$text": {"$search": search_string}})
-
-    if request.method == 'POST':
-
-        # If no search input flash the message
-        if search_string == '':
-
-            flash('You have not provided a search input! Please try again or browse through all exercises.', 'error')
-
-            return redirect('/muscle_groups')
-
-        # If no results display info message
-        elif results_count == 0:
-
-            flash(f'No matching results found for "{search_input}". Please try a different search or browse through all exercises', 'error')
-
-            return redirect('/muscle_groups')
-
-        # Display search result
-        else:
-
-            return render_template('search.html', exercises=search_results)
-
-    return render_template('search.html', exercises=search_results)
-
-
 # Set up of IP address and PORT number
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
-            debug=True)
+            debug=False)
