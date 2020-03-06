@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for, flash, redirect, request, session, jsonify
 from flask_pymongo import PyMongo
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-from forms import LoginForm, RegistrationForm, ExerciseForm
+from forms import LoginForm, RegistrationForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from user import User
 from bson.objectid import ObjectId
@@ -65,7 +65,7 @@ def register():
         else:
             flash('This username is already in use. Please try a different one.', 'error')
 
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', form=form)
 
 
 # User Loader Function
@@ -117,7 +117,7 @@ def login():
 
             flash('Wrong password.', 'error')
 
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html', form=form)
 
 
 # Logout
@@ -192,8 +192,7 @@ def my_exercises():
     return render_template('my_exercises.html',
                            user=user,
                            added_exercises=added_exercises,
-                           liked_exercises=liked_exercises,
-                           title='My Exercises')
+                           liked_exercises=liked_exercises)
 
 
 # Delete Account
@@ -257,11 +256,13 @@ def add_exercise(category):
     '''
 
     user = session['username']
-    form = ExerciseForm()
+    categories = ["Push", "Pull", "Legs", "Core"]
+    difficulties = ["easy", "medium", "difficult"]
 
     return render_template('add_exercise.html',
                            user=user, category=category,
-                           form=form, title='Add Exercise')
+                           categories=categories,
+                           difficulties=difficulties)
 
 
 # Insert Exercise
@@ -321,11 +322,14 @@ def edit_exercise(category, exercise_id):
     '''
 
     the_exercise = mongo.db.exercises.find_one({"_id": ObjectId(exercise_id)})
-    form = ExerciseForm()
+    categories = ["Push", "Pull", "Legs", "Core"]
+    difficulties = ["easy", "medium", "difficult"]
 
     return render_template('edit_exercise.html',
                            category=category,
-                           exercise=the_exercise, form=form)
+                           exercise=the_exercise, 
+                           categories=categories,
+                           difficulties=difficulties)
 
 
 # Update Exercise
@@ -510,7 +514,7 @@ def search():
         # If no search input flash the message
         if search_string == '':
 
-            flash('You have not provided any search input! Please try again or browse through all exercises.', 'error')
+            flash('You have not provided a search input! Please try again or browse through all exercises.', 'error')
 
             return redirect('/muscle_groups')
 
