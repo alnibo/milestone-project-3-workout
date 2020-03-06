@@ -6,8 +6,12 @@ from wtforms.validators import DataRequired, EqualTo, Length
 # Login Form
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username',
+                           validators=[DataRequired(
+                               "Please enter a valid username")])
+    password = PasswordField('Password',
+                             validators=[DataRequired(
+                                 "Please enter your password")])
     submit = SubmitField('Login')
 
 

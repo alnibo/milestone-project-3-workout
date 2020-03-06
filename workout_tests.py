@@ -1,6 +1,9 @@
 from workout import app
 from flask import Flask
 from flask_testing import TestCase
+from user import User
+from flask_login import current_user, LoginManager, login_user
+from werkzeug.security import generate_password_hash
 import unittest
 
 
@@ -8,7 +11,6 @@ class MyTest(TestCase):
 
     def create_app(self):
 
-        app = Flask(__name__)
         app.config['TESTING'] = True
         app.config['MONGO_URI'] = 'mongodb://'
         return app
@@ -123,6 +125,32 @@ class MyTest(TestCase):
                                               ))
         data = response.data.decode('utf-8')
         assert 'Please enter your password' in data
+
+    # Test Password Hashing
+
+    def test_password_hashing(self):
+        u = User(username='abcde')
+        password_hash = generate_password_hash('abcde')
+        self.assertFalse(u.check_password(password_hash, 'vwxyz'))
+        self.assertTrue(u.check_password(password_hash, 'abcde'))
+
+    # Test Example Login
+
+    def test_login(self):
+
+        login_manager = LoginManager()
+        login_manager.init_app(app)
+
+        with app.test_request_context():
+
+            # create and log in user
+            currentUser = User(username='abcde')
+            login_user(currentUser)
+
+            # test that user was logged in
+            assert current_user.is_active
+            assert current_user.is_authenticated
+            assert current_user == currentUser
 
 
 if __name__ == '__main__':
