@@ -352,12 +352,6 @@ li.disabled span {
     .workout-logo {
         display: inline;
     }
-    .top-text {
-        width: 60%;
-    }
-    .home-text {
-        width: 60%;
-    }
 }
 
 @media (min-width:385px) {
@@ -369,6 +363,12 @@ li.disabled span {
 @media (min-width:534px) {
     .background-container {
         background-position: center;
+    }
+    .top-text {
+        width: 60%;
+    }
+    .home-text {
+        width: 60%;
     }
 }
 
