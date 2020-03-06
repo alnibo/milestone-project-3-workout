@@ -19,7 +19,7 @@
 		<div class="col s12">
 			<div class="card sticky-action horizontal">
 
-                <!-- Image corresponding to the muscle group -->
+                <!-- Image corresponding to the muscle group (hidden for mobile view ) -->
                 <div class="card-image {{category.lower()}}-pic hide-on-small-only">
                     <h3 class="header">{{category.title()}} exercise</h3>
                 </div>
@@ -28,6 +28,9 @@
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
+
+                            <!-- Header for muscle group will be displayed for small screen sizes -->
+                            <h2 class="hide-on-med-and-up">{{exercise.category_name.title()}} exercise</h2>
                             <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
                             <div class="vote">
                                 

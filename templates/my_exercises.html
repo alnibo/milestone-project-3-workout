@@ -43,7 +43,7 @@
 		<div class="col s12">
 			<div class="card sticky-action horizontal">
 
-                <!-- Image corresponding to the muscle group -->
+                <!-- Image corresponding to the muscle group (hidden for mobile view ) -->
 				<a class="card-image {{exercise.category_name.lower()}}-pic hide-on-small-only"
 					href="{{ url_for('get_category', category=exercise.category_name) }}">
 					<h3 class="header">{{exercise.category_name.title()}} exercise</h3>
@@ -53,7 +53,10 @@
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
-							<h3 class="exercise-name">{{exercise.exercise_name}}</h3>
+
+                            <!-- Header for muscle group will be displayed for small screen sizes -->
+                            <h2 class="hide-on-med-and-up">{{exercise.category_name.title()}} exercise</h2>
+                            <h3 class="exercise-name">{{exercise.exercise_name}}</h3>
 							<div class="vote">
 
 								<!-- Like button, displayed in green if current user has already liked the exercise -->
@@ -124,6 +127,7 @@
 				<div class="card-stacked">
 					<div class="card-content valign-wrapper">
 						<div class="full-content">
+                            <h2 class="hide-on-med-and-up">{{exercise.category_name.title()}} exercise</h2>
 							<h3 class="exercise-name">{{exercise.exercise_name}}</h3>
 							<div class="vote">
 
