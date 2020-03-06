@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, EqualTo, Length
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, EqualTo, Length
 
 
 # Login Form
@@ -21,32 +21,3 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField('Confirm Password',
                               validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
-
-
-# Add Exercise Form
-"""
-class ExerciseForm(FlaskForm):
-    exercise_name = StringField('Exercise Name', validators=[DataRequired()])
-    muscles = StringField('Muscles', validators=[DataRequired()])
-    exercise_difficulty = SelectField('Exercise Difficulty',
-                                      validators=[DataRequired()],
-                                      choices=[('easy', 'easy'),
-                                               ('medium', 'medium'),
-                                               ('difficult', 'difficult')])
-    equipment = StringField('Equipment', validators=[DataRequired()])
-    exercise_instructions = TextAreaField('Exercise Instructions',
-                                          validators=[DataRequired()])
-    submit = SubmitField('Add Exercise')
-
-
-
-category_name = SelectField('Exercise Group', validators=[DataRequired()],
-                                choices=[('Push', 'Push'),
-                                         ('Pull', 'Pull'),
-                                         ('Legs', 'Legs'),
-                                         ('Core', 'Core')])
-category_name = StringField('Exercise Group', validators=[DataRequired()])
-
-exercise_difficulty = StringField('Exercise Difficulty',
-                                      validators=[DataRequired()])
-"""
