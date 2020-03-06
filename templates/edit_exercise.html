@@ -17,12 +17,25 @@
                 <!-- Edit form -->
                 <form action="{{ url_for('update_exercise', category=category, exercise_id=exercise._id) }}" method="POST" class="col s10 offset-s1">
                     <div class="row">
+
+                        <!-- Select input field for muscle group -->
                         <div class="input-field col s12">
                             <i class="material-icons prefix">dashboard</i>
-                            <input name="category_name" type="text" value="{{ exercise.category_name }}" required>
-                            <label for="category_name">Exercise Group</label>
+                            <select name="category_name">
+                                <option value="" disabled selected>Choose Muscle Group</option>
+                                {% for cat in categories %}
+                                    {% if cat == exercise.category_name %}
+                                    <option value="{{cat}}" selected>{{cat}}</option>
+                                    {% else %}
+                                    <option value="{{cat}}">{{cat}}</option>
+                                    {% endif  %}
+                                {% endfor %}
+                            </select>
+                            <label>Exercise Group</label>
                         </div>
                     </div>
+
+                    <!-- Input field for exercise name -->
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">directions_run</i>
@@ -30,6 +43,8 @@
                             <label for="exercise_name">Exercise Name</label>
                         </div>
                     </div>
+
+                    <!-- Input field for affected muscle names -->
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">linear_scale</i>
@@ -37,13 +52,26 @@
                             <label for="muscles">Affected Muscles</label>
                         </div>
                     </div>
+
+                    <!-- Select input field for exercise difficulty -->
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">network_check</i>
-                            <input name="exercise_difficulty" type="text" value="{{ exercise.exercise_difficulty }}" required>
-                            <label for="exercise_difficulty">Exercise Difficulty</label>
+                            <select name="exercise_difficulty">
+                                <option value="" disabled selected>Choose level of difficulty</option>
+                                {% for dif in difficulties %}
+                                    {% if dif == exercise.exercise_difficulty %}
+                                    <option value="{{dif}}" selected>{{dif}}</option>
+                                    {% else %}
+                                    <option value="{{dif}}">{{dif}}</option>
+                                    {% endif  %}
+                                {% endfor %}
+                            </select>
+                            <label>Exercise Difficulty</label>
                         </div>
                     </div>
+
+                    <!-- Input field for exercise equipment -->
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">settings</i>
@@ -51,23 +79,28 @@
                             <label for="equipment">Equipment</label>
                         </div>
                     </div>
+
+                    <!-- Textarea input field for exercise instructions -->
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">info</i>
-                            <textarea name="exercise_instructions" type="text" required>{{ exercise.exercise_instructions }}</textarea>
+                            <textarea name="exercise_instructions" type="text" class="materialize-textarea" required>{{ exercise.exercise_instructions }}</textarea>
                             <label for="exercise_instructions">Exercise Instructions</label>
                         </div>
                     </div>
+
                     <div class="row center">
 
-                        <!-- Submit and cancel button -->
+                        <!-- Submit button -->
                         <div class="col m6 s12">
                             <button class="btn waves-effect waves-light home-btn btn-edit" type="submit" name="action">Save Changes</button>
                         </div>
+
+                        <!-- Cancel button -->
                         <div class="col m6 s12">
-                            <a class="btn waves-effect waves-light home-btn btn-edit" href="{{url_for('my_exercises')}}">Cancel</a>
+                            <a class="btn waves-effect waves-light home-btn btn-edit" href="{{url_for('get_category', category=category)}}">Cancel</a>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
 			</div>
 		</div>

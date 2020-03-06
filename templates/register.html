@@ -3,6 +3,8 @@
 <section class="background-container">
     <div class="row">
 		<div class="login-reg-box col s8 offset-s2">
+
+            <!-- Header -->
 			<div class="row">
 				<h2>Register new account</h2>
 			</div>
@@ -10,9 +12,13 @@
 				<span class="col s10 offset-s1">Select a non-existing username and password to create a new account.</span>
 			</div>
 			<div class="row">
+
+                <!-- Register form -->
 				<form method="POST" class="col s10 offset-s1">
 					{{ form.hidden_tag() }}
 					<div class="row">
+
+                        <!-- Input field for username -->
 						<div class="input-field col s12">
 							<i class="material-icons prefix">account_circle</i>{{ form.username.label }}<br>{{ form.username(size=32) }}
                             {% if form.username.errors %}
@@ -24,6 +30,8 @@
                             {% endif %}
                         </div>
 					</div>
+
+                    <!-- Input field for password -->
 					<div class="row">
 					    <div class="input-field col s12">
 							<i class="material-icons prefix">lock</i>{{ form.password.label }}<br>{{ form.password(size=32) }}
@@ -36,6 +44,8 @@
                             {% endif %}
                         </div>
 					</div>
+
+                    <!-- Input field for repeat password -->
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">lock</i>{{ form.password2.label }}<br>{{ form.password2(size=32) }}
@@ -49,8 +59,13 @@
                         </div>
 					</div>
 					<div class="row">
+
+                        <!-- Submit button -->
 						<div class="col s12 center-align">
-							<button class="waves-effect waves-light btn home-btn">{{ form.submit() }}</button></div>
+							<button class="waves-effect waves-light btn home-btn">{{ form.submit() }}</button>
+                        </div>
+
+                        <!-- Option to login with an existing account -->
 						<div class="col s12 center-align">
 							<span>Or <a href="{{ url_for('login') }}">login</a> with existing account.</span>
 						</div>

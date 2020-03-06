@@ -4,55 +4,47 @@
 
 	<div class="row">
 		<div class="login-reg-box col s8 offset-s2">
+
+            <!-- Header -->
 			<div class="row">
 				<h2>Login</h2>
 			</div>
 			<div class="row">
+
+                <!-- Login form -->
                 <form method="POST" class="col s12">
 
 					{{ form.hidden_tag() }}
 
+                    <!-- Input field for username -->
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">account_circle</i>{{ form.username.label }}<br>{{ form.username(size=32) }}
 						</div>
 					</div>
 
+                    <!-- Input field for password -->
 					<div class="row">
 						<div class="input-field col s12">
 							<i class="material-icons prefix">lock</i>{{ form.password.label }}<br>{{ form.password(size=32) }}
 						</div>
 					</div>
 
+                    
 					<div class="row">
+
+                        <!-- Submit button -->
 						<div class="col s12 center-align">
 							<button class="btn home-btn waves-effect waves-light">{{ form.submit() }}</button>
 						</div>
+
+                        <!-- Option to register a new account -->
 						<div class="col s12 center-align">
 							<span>Login with an existing account or <a href="{{ url_for('register') }}">register</a> a new account.</span>
 						</div>
 					</div>
+                    
 				</form>
-
-				<!--<form class="col s10 offset-s1">
-					<div class="input-field">
-						<i class="material-icons prefix">account_circle</i>
-						<input id="username" type="text" class="validate">
-						<label for="username">username</label>
-					</div>
-					<div class="input-field">
-						<i class="material-icons prefix">lock</i>
-						<input id="password" type="text" class="validate">
-						<label for="password">password</label>
-					</div>
-				</form>
-			
-                <div class="row">
-                    <a href="#" class="waves-effect waves-light btn col s10 offset-s1">Login</a>
-                </div>
-                <div class="row">
-                    <span class="col s10 offset-s1">Login with an existing account or <a href="{{ url_for('register') }}">register</a> a new account.</span>
-                </div>-->
 			</div>
 		</div>
 	</div>
