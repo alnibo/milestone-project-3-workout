@@ -48,7 +48,6 @@
         <ul class="side-nav" id="mobile-demo">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if current_user.is_authenticated %}
-            <li><a class="dropdown-button" href="{{ url_for('muscle_groups') }}" data-activates="dropdown1">All Exercises<i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
             <li><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
