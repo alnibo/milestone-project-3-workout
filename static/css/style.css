@@ -15,6 +15,14 @@
     display: none;
 }
 
+#dropdown1.dropdown-content {
+    top: 64px!important;
+}
+
+#dropdown1.dropdown-content.active {
+    top: 64px!important;
+}
+
 h1 {
     font-size: 3rem;
 }
@@ -116,6 +124,16 @@ h3 {
 
 .home-btn:hover {
     background-color: black;
+}
+
+.search-box {
+    border-bottom: solid 1px!important;
+    padding-bottom: 10px!important;
+    padding-top: 10px!important;
+}
+
+.close-button {
+    transform: translateY(6px)
 }
 
 /* ************************************************** Login and register pages */
@@ -311,15 +329,15 @@ h3 {
     background-color: grey;
 }
 
-/* ************************************************** Add Exercise Page */
+/* ************************************************** Edit Exercise Page */
 
-.input-field>select {
-    width: 92%;
-    height: 3rem;
-    pointer-events: visible;
+li span {
+    color: black!important;
 }
 
-/* ************************************************** Edit Exercise Page */
+li.disabled span {
+    color: grey!important;
+}
 
 .btn-edit {
     min-width: 156px;

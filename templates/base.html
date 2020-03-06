@@ -24,7 +24,7 @@
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li {%- if request.path == url_for('index') %} class="active"{% endif %}><a href="{{ url_for('index') }}">Home</a></li>
                         {% if current_user.is_authenticated %}
-                        <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
+                        <li {%- if request.path == url_for('muscle_groups') %} class="active"{% endif %}><a class="dropdown-button" href="{{ url_for('muscle_groups') }}" data-activates="dropdown1">All Exercises<i class="material-icons right">arrow_drop_down</i></a></li>
                         <li {%- if request.path == url_for('my_exercises') %} class="active"{% endif %}><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
                         <li {%- if request.path == url_for('logout') %} class="active"{% endif %}><a href="{{ url_for('logout') }}">Logout</a></li>
                         {% else %}
@@ -34,12 +34,21 @@
                     </ul>
                 </div>
             </nav>
+
+            <!-- Dropdown Structure -->
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a href="{{ url_for('get_category', category='Push') }}" class="black-text">Push</a></li>
+                <li><a href="{{ url_for('get_category', category='Pull') }}" class="black-text">Pull</a></li>
+                <li><a href="{{ url_for('get_category', category='Legs') }}" class="black-text">Legs</a></li>
+                <li><a href="{{ url_for('get_category', category='Core') }}" class="black-text">Core</a></li>
+            </ul>
         </div>
 
         <!-- Side Nav Menu -->
         <ul class="side-nav" id="mobile-demo">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if current_user.is_authenticated %}
+            <li><a class="dropdown-button" href="{{ url_for('muscle_groups') }}" data-activates="dropdown1">All Exercises<i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a href="{{ url_for('muscle_groups') }}">All Exercises</a></li>
             <li><a href="{{ url_for('my_exercises') }}">My Exercises</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
