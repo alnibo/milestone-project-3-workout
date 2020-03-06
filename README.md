@@ -65,7 +65,7 @@ As a user I expect/would like/need:
 
 ### Wireframes
 
-In the planing process using [Balsamiq](https://balsamiq.cloud/) following [wireframes](https://github.com/alnibo/milestone-project-3-workout/tree/master/wireframes) were created in order to design the layout for this project for mobile, medium and desktop views.
+In the planing process using [Balsamiq](https://balsamiq.cloud/) [these wireframes](https://github.com/alnibo/milestone-project-3-workout/tree/master/wireframes) were created in order to design the layout for this project for mobile, medium and desktop views.
 
 ## 3. Database
 
