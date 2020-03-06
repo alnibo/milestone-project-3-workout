@@ -104,19 +104,19 @@ password | String
 
 #### Page Structure
 
-- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to 'Home', 'All Exercises', 'My Exercises' and 'Logout'. If a user has not logged in the links 'Home', 'Login' and 'Register' are visible.
+- **Navbar:** Using Materialize the navbar is fixed at the top and collapses on medium and small devices. It is then accessible through a sidepanel that slides in from the left. If a user is logged in the navbar contains a brand logo, the website's name and the links to 'Home', 'All Exercises', 'My Exercises' and 'Logout'. When clicking the 'All Exercises' button a dropdown menu appears in which the user can directly choose one of the four muscle groups. If a user has not logged in the links 'Home', 'Login' and 'Register' are visible.
 
 - **Footer:** The footer contains the education disclaimer and a GitHub link.
 
 #### Forms
 
-- **Register form:** enables users to create an account in order to use the app. The input fields are username and password (password needs to be repeated to confirm it).
+- **Register form:** the flask register form enables users to create an account in order to use the app. The input fields are username and password (password needs to be repeated to confirm it).
 
-- **Login form:** enables existing users to login and use the website.
+- **Login form:** the flask login form enables existing users to login and use the website.
 
-- **Add exercise form:** enables users to add their own exercises that they want to share with other users.
+- **Add exercise form:** form that enables users to add their own exercises that they want to share with other users.
 
-- **Edit exercise form:** enables a user to edit and update their own exercises.
+- **Edit exercise form:** form that enables a user to edit and update their own exercises.
 
 #### Buttons
 
@@ -199,6 +199,13 @@ No errors nor warnings remained.
 
 
 ### Features testing
+
+| Feature | Tests | Bugs |
+--- | --- | ---
+Navbar | - test if all navbar buttons redirect to the correct page <br> - test if buttons corresponding to the current page are highlighted <br> - check if navbar collapses on smaller devices and if sideNav works <br> - check if dropdown button works  | - SideNav was not clickable, I then moved the code outside the navbar-fixed div and then it worked. <br> - dropdown menu didn't work. resolved through using correct code for the corresponding Materialize version
+Register Button | |
+Login Button | |
+
 
 ### Responsiveness testing
 
