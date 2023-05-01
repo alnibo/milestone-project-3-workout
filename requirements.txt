@@ -2,7 +2,7 @@ app==0.0.1
 blinker==1.4
 Click==7.0
 dnspython==1.16.0
-Flask==1.1.1
+Flask==2.3.2
 Flask-Login==0.4.1
 Flask-PyMongo==2.3.0
 Flask-Testing==0.8.0
